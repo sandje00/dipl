@@ -4,11 +4,33 @@
   "private": true,
   "scripts": {
     "dev:client": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "build:client": "vue-cli-service build",
+    "dev:server": "nodemon ./server | bunyan",
+    "lint": "vue-cli-service lint",
+    "db:create": "sequelize-cli db:create && sequelize-cli db:migrate",
+    "db:seed": "sequelize-cli db:seed:all",
+    "db:seed:undo": "sequelize-cli db:seed:undo:all",
+    "db:seed:create": "sequelize-cli seed:generate",
+    "db:reset": "sequelize-cli db:drop && npm run db:create",
+    "db:migrate": "sequelize-cli db:migrate",
+    "db:migrate:undo": "sequelize-cli db:migrate:undo",
+    "db:migration:create": "sequelize-cli migration:generate"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bunyan": "^1.8.15",
     "core-js": "^3.6.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^5.0.2",
+    "http-status": "^1.5.0",
+    "lodash": "^4.17.21",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.17.0",
+    "umzug": "^3.0.0",
     "vue": "^3.0.0"
   },
   "devDependencies": {
@@ -18,7 +40,9 @@
     "@vue/compiler-sfc": "^3.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0"
+    "eslint-plugin-vue": "^7.0.0",
+    "nodemon": "^2.0.15",
+    "sequelize-cli": "^6.4.1"
   },
   "eslintConfig": {
     "root": true,
