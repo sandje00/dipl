@@ -1,0 +1,26 @@
+$colors: (
+  // Brand colors
+  "primary": "#5f56e7",
+  // System colors
+  "info": "#56dfcc",
+  "success": "#14d364",
+  "error": "#ef4345",
+  // Tints and shades
+  "primary-light": "#f5f3ff",
+  "info-light": "#defcf8",
+  "success-light": "#d1ffe4",
+  "error-light": "#f7baba",
+  // Neutrals
+  "white": "#ffffff",
+  "black": "#000000",
+  "gray": "#6c727f",
+  "gray-lighter-1": "#a2a8b1",
+  "gray-lighter-2": "#d2d5da",
+  "gray-lighter-3": "#f9fafb"
+);
+
+:root {
+  @each $name, $value in $colors {
+    --color-#{$name}: #{$value};
+  }
+}
