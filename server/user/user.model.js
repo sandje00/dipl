@@ -5,7 +5,7 @@ const { Model } = require('sequelize');
 const { auth: { saltRounds } } = require('../config');
 
 class User extends Model {
-  static fields({ INTEGER, STRING, DATE }) {
+  static fields({ INTEGER, STRING, TEXT, BOOLEAN, DATE }) {
     return {
       id: {
         type: INTEGER,
@@ -31,6 +31,13 @@ class User extends Model {
       password: {
         type: STRING,
         allowNull: false
+      },
+      imgUrl: {
+        type: TEXT
+      },
+      active: {
+        type: BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         type: DATE,

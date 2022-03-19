@@ -23,6 +23,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      imgUrl: {
+        type: Sequelize.TEXT,
+        field: 'img_url'
+      },
+      active: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       createdAt: {
         type: Sequelize.DATE,
         field: 'created_at',
