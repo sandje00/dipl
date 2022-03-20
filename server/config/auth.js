@@ -3,7 +3,7 @@
 const {
   AUTH_SALT_ROUNDS,
   AUTH_JWT_SECRET
-} = process.env.AUTH_SALT_ROUNDS;
+} = process.env;
 
 module.exports = {
   saltRounds: parseInt(AUTH_SALT_ROUNDS),
