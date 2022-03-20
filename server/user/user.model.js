@@ -2,7 +2,7 @@
 
 const Audience = require('../shared/auth/audience');
 const bcrypt = require('bcrypt');
-const jwt = require('jwt');
+const jwt = require('jsonwebtoken');
 const { logger } = require('../shared/logger');
 const { Model } = require('sequelize');
 const pick = require('lodash/pick');

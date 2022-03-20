@@ -5,7 +5,8 @@ const {
   CREATED,
   CONFLICT,
   NOT_FOUND,
-  OK } = require('../shared/errors/status');
+  OK
+} = require('../shared/errors/status');
 const HttpError = require('../shared/errors/httpError');
 const { UniqueConstraintError } = require('sequelize');
 const User = require('./user.model');
