@@ -2,9 +2,11 @@
 
 const ctrl = require('./user.controller');
 const router = require('express').Router();
+const verifyJwt = require('../shared/auth/verify');
 
 router
   .post('/register', ctrl.register)
+  .get('/verify/:token', verifyJwt, ctrl.verify)
   .get('/', ctrl.getAll);
 
 module.exports = { path: '/users', router };
