@@ -87,7 +87,7 @@ class User extends Model {
     return jwt.sign(payload, secret, options);
   }
 
-  verifyEmail() {
+  async verifyEmail() {
     const token = this.createToken({
       audience: Audience.Scope.Setup,
       expiresIn: '5 days'
