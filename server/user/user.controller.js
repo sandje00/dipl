@@ -11,8 +11,8 @@ const msg = {
 
 async function register({ body }, res) {
   try {
-    await User.create(body);
-    // TODO: verify user email
+    const user = await User.create(body);
+    user.verifyEmail();
   } catch (err) {
     if (err instanceof UniqueConstraintError) {
       throw new HttpError(BAD_REQUEST, err.errors[0].message);
