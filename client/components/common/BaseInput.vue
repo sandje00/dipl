@@ -4,7 +4,9 @@
     :value="modelValue"
     :class="{ error }"
     v-bind="{...$attrs, onInput: updateModelValue }"
-    class="input">
+    class="mt-s px-m py-s input"
+  >
+  <span class="pl-xs error">{{ error }}</span>
 </template>
 
 <script>
@@ -28,9 +30,25 @@ export default {
 .input {
   font-size: inherit;
   background: none;
+  border: 1px solid var(--color-text-primary);
+  border-radius: 5px;
 
   &:focus {
     outline: none;
+  }
+
+  &.error {
+    border-color: var(--color-error);
+  }
+}
+
+.error {
+  color: var(--color-error);
+
+  &::after {
+    content: " ";
+    font-size: 0;
+    white-space: pre;
   }
 }
 </style>

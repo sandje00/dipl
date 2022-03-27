@@ -23,4 +23,9 @@ $colors: (
   @each $name, $value in $colors {
     --color-#{$name}: #{$value};
   }
+
+  --color-background: var(--color-gray-lighter-3);
+  --color-text-primary: var(--color-gray);
+  --color-background-form: var(--color-white);
+  --color-border: var(--color-gray-lighter-2);
 }
