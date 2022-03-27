@@ -34,7 +34,8 @@
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.17.0",
     "umzug": "^3.0.0",
-    "vue": "^3.0.0"
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.14"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.15",
