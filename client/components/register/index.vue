@@ -1,7 +1,11 @@
 <template>
   <div class="flex-v justify-center align-items-center register">
     <div class="register-form">
+      <span v-if="successMessage" class="pa-l success-message">
+        {{ successMessage }}
+      </span>
       <form
+        v-else
         @submit.prevent="register"
         class="flex-v justify-center align-center align-items-stretch pa-l"
       >
@@ -47,10 +51,13 @@ import api from '../../api/users';
 import BaseButton from '../common/BaseButton';
 import BaseInput from '../common/BaseInput';
 import pick from 'lodash/pick';
+import { ref } from 'vue';
 
 export default {
   name: 'register-view',
   setup() {
+    const successMessage = ref('');
+
     const validationSchema = {
       username: { required: true, min: 2, max: 50 },
       email: { required: true, email: true },
@@ -70,13 +77,21 @@ export default {
       api
         .register(data)
         .then(({ data: { message } }) => {
-          console.log(message);
-          resetForm()
+          successMessage.value = message;
+          resetForm();
         })
         .catch(({ data: { error } }) => console.log(error));
     });
 
-    return { errors, username, email, password, repeat, register }
+    return {
+      successMessage,
+      errors,
+      username,
+      email,
+      password,
+      repeat,
+      register
+    }
   },
   components: { BaseButton, BaseInput }
 }
@@ -86,6 +101,12 @@ export default {
 .register {
   height: 100vh;
   background-color: var(--color-background);
+
+  .success-message {
+    display: inline-block;
+    color: var(--color-text-secondary);
+    font-size: 1.2rem; // TODO Define inside _typography.scss
+  }
 
   &-form {
     max-width: 30rem; // TODO Define inside _measures.scss
