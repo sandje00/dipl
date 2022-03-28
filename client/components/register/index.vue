@@ -2,6 +2,7 @@
   <div class="flex-v justify-center align-items-center register">
     <div class="register-form">
       <form
+        @submit.prevent="register"
         class="flex-v justify-center align-center align-items-stretch pa-l"
       >
         <base-input
@@ -42,8 +43,10 @@
 
 <script>
 import { useForm, useField } from 'vee-validate';
+import api from '../../api/users';
 import BaseButton from '../common/BaseButton';
 import BaseInput from '../common/BaseInput';
+import pick from 'lodash/pick';
 
 export default {
   name: 'register-view',
@@ -54,15 +57,26 @@ export default {
       password: { required: true, min: 8 },
       repeat: { required: true, confirmed: '@password' }
     };
-
-    const { errors } = useForm({ validationSchema });
+    // TODO Figure out how to display a custom error message
+    const { errors, handleSubmit } = useForm({ validationSchema });
 
     const { value: username } = useField('username');
     const { value: email } = useField('email');
     const { value: password } = useField('password');
     const { value: repeat } = useField('repeat');
+    // TODO Message snackbars
+    const register = handleSubmit((values, { resetForm }) => {
+      const data = pick(values, ['username', 'email', 'password']);
+      api
+        .register(data)
+        .then(({ data: { message } }) => {
+          console.log(message);
+          resetForm()
+        })
+        .catch(({ data: { error } }) => console.log(error));
+    });
 
-    return { errors, username, email, password, repeat }
+    return { errors, username, email, password, repeat, register }
   },
   components: { BaseButton, BaseInput }
 }
