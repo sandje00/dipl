@@ -1,55 +1,54 @@
 <template>
-  <div class="flex-v justify-center align-items-center register">
-    <div class="register-form">
-      <span v-if="successMessage" class="pa-l success-message">
-        {{ successMessage }}
-      </span>
-      <form
-        v-else
-        @submit.prevent="register"
-        class="flex-v justify-center align-center align-items-stretch pa-l"
-      >
-        <base-input
-          v-model="username"
-          type="text"
-          name="username"
-          label="Username"
-          :error="errors.username"
-        ></base-input>
-        <base-input
-          v-model="email"
-          name="email"
-          type="text"
-          label="E-mail"
-          :error="errors.email"
-        ></base-input>
-        <base-input
-          v-model="password"
-          name="password"
-          type="password"
-          label="Password"
-          :error="errors.password"
-        ></base-input>
-        <base-input
-          v-model="repeat"
-          name="repeat"
-          type="password"
-          label="Repeat password"
-          :error="errors.repeat"
-        ></base-input>
-        <base-button class="mt-m">
-          Register
-        </base-button>
-      </form>
-    </div>
-  </div>
+  <form-layout>
+    <span v-if="successMessage" class="pa-l success-message">
+      {{ successMessage }}
+    </span>
+    <form
+      v-else
+      @submit.prevent="register"
+      class="flex-v justify-center align-center align-items-stretch pa-l"
+    >
+      <base-input
+        v-model="username"
+        type="text"
+        name="username"
+        label="Username"
+        :error="errors.username"
+      ></base-input>
+      <base-input
+        v-model="email"
+        name="email"
+        type="text"
+        label="E-mail"
+        :error="errors.email"
+      ></base-input>
+      <base-input
+        v-model="password"
+        name="password"
+        type="password"
+        label="Password"
+        :error="errors.password"
+      ></base-input>
+      <base-input
+        v-model="repeat"
+        name="repeat"
+        type="password"
+        label="Repeat password"
+        :error="errors.repeat"
+      ></base-input>
+      <base-button class="mt-m">
+        Register
+      </base-button>
+    </form>
+  </form-layout>
 </template>
 
 <script>
 import { useForm, useField } from 'vee-validate';
-import api from '../../api/users';
-import BaseButton from '../common/BaseButton';
-import BaseInput from '../common/BaseInput';
+import api from '../api/users';
+import BaseButton from './common/BaseButton';
+import BaseInput from './common/BaseInput';
+import FormLayout from './common/FormLayout';
 import pick from 'lodash/pick';
 import { ref } from 'vue';
 
@@ -93,7 +92,7 @@ export default {
       register
     }
   },
-  components: { BaseButton, BaseInput }
+  components: { BaseButton, BaseInput, FormLayout }
 }
 </script>
 
