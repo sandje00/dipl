@@ -98,20 +98,10 @@ export default {
 
 <style lang="scss" scoped>
 .register {
-  height: 100vh;
-  background-color: var(--color-background);
-
   .success-message {
     display: inline-block;
     color: var(--color-text-secondary);
     font-size: 1.2rem; // TODO Define inside _typography.scss
-  }
-
-  &-form {
-    max-width: 30rem; // TODO Define inside _measures.scss
-    background-color: var(--color-background-form);
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
   }
 }
 </style>
