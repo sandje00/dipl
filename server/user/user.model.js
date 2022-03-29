@@ -1,11 +1,16 @@
 'use strict';
 
+const Audience = require('../shared/auth/audience');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { logger } = require('../shared/logger');
 const { Model } = require('sequelize');
-const { auth: { saltRounds } } = require('../config');
+const pick = require('lodash/pick');
+const { sendVerificationEmail } = require('../shared/mail');
+const { auth: { saltRounds, secret } } = require('../config');
 
 class User extends Model {
-  static fields({ INTEGER, STRING, DATE }) {
+  static fields({ INTEGER, STRING, TEXT, BOOLEAN, DATE }) {
     return {
       id: {
         type: INTEGER,
@@ -31,6 +36,13 @@ class User extends Model {
       password: {
         type: STRING,
         allowNull: false
+      },
+      imgUrl: {
+        type: TEXT
+      },
+      active: {
+        type: BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         type: DATE,
@@ -68,6 +80,23 @@ class User extends Model {
     return bcrypt.genSalt(saltRounds)
       .then(salt => bcrypt.hash(this.password, salt))
       .then(pw => { this.password = pw; });
+  }
+
+  createToken(options = {}) {
+    const payload = pick(this, ['id', 'username', 'email']);
+    return jwt.sign(payload, secret, options);
+  }
+
+  async verifyEmail() {
+    const token = this.createToken({
+      audience: Audience.Scope.Setup,
+      expiresIn: '5 days'
+    });
+
+    return sendVerificationEmail(token, this.email)
+      .catch(err => {
+        logger.error('An error has occured sending verification email:', err.message);
+      });
   }
 }
 
