@@ -5,17 +5,20 @@ const {
   CREATED,
   CONFLICT,
   NOT_FOUND,
-  OK
+  OK,
+  UNAUTHORIZED
 } = require('../shared/errors/status');
+const { UniqueConstraintError, Op } = require('sequelize');
+const Audience = require('../shared/auth/audience');
 const HttpError = require('../shared/errors/httpError');
-const { UniqueConstraintError } = require('sequelize');
 const User = require('./user.model');
 
 const msg = {
   SUCCESS_REGISTER: 'You have been registered successfully. Check your email to verify your account.',
   SUCCESS_VERIFY: 'Your email account has been verified.',
   USER_NOT_FOUND: 'User not found.',
-  ALREADY_VERIFIED: 'This account has already been verified'
+  ALREADY_VERIFIED: 'This account has already been verified',
+  WRONG_CREDENTIALS: 'Username and password are not matching'
 };
 
 async function register({ body }, res) {
@@ -42,6 +45,26 @@ async function verify({ id }, res) {
   });
 }
 
+async function login(req, res) {
+  const { usernameOrEmail, password } = req.body;
+  const user = await User.findOne({
+    where: {
+      [Op.or]: {
+        username: usernameOrEmail,
+        email: usernameOrEmail
+      }
+    }
+  });
+  if (!user) throw new HttpError(UNAUTHORIZED, msg.WRONG_CREDENTIALS);
+  const result = await user.passwordCompare(password);
+  if (!result) throw new HttpError(UNAUTHORIZED, msg.WRONG_CREDENTIALS);
+  const token = user.createToken({
+    audience: Audience.Scope.Access,
+    expiresIn: '5 days'
+  });
+  return res.status(OK).json({ token });
+}
+
 async function getAll(req, res) {
   const users = await User.findAll();
   return res.status(OK).json({ users });
@@ -50,5 +73,6 @@ async function getAll(req, res) {
 module.exports = {
   register,
   verify,
+  login,
   getAll
 };
