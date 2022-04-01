@@ -97,11 +97,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.register {
-  .success-message {
-    display: inline-block;
-    color: var(--color-text-secondary);
-    font-size: 1.2rem; // TODO Define inside _typography.scss
-  }
+.success-message {
+  display: inline-block;
+  color: var(--color-text-secondary);
+  font-size: 1.2rem; // TODO Define inside _typography.scss
 }
 </style>
