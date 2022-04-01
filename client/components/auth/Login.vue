@@ -1,5 +1,7 @@
 <template>
-  <form class="flex-v justify-center align-center align-items-stretch pa-l">
+  <form
+    @submit.prevent="login"
+    class="flex-v justify-center align-center align-items-stretch pa-l">
     <base-input
       v-model="usernameOrEmail"
       type="text"
@@ -22,6 +24,7 @@
 
 <script>
 import { useForm, useField } from 'vee-validate';
+import api from '../../api/auth';
 import BaseButton from '../common/BaseButton';
 import BaseInput from '../common/BaseInput';
 
@@ -37,8 +40,17 @@ export default {
 
     const { value: usernameOrEmail } = useField('usernameOrEmail');
     const { value: password } = useField('password');
-
-    const login = handleSubmit();
+    // TODO Message snackbars
+    const login = handleSubmit((values, { resetForm }) => {
+      api
+        .login(values)
+        .then(({ data: { token } }) => {
+          // TODO Auth cookies and redirection
+          console.log(token);
+          resetForm();
+        })
+        .catch(({ data: { error } }) => console.log(error));
+    });
 
     return { errors, usernameOrEmail, password, login };
   },
