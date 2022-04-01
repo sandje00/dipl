@@ -57,7 +57,3 @@ export default {
   components: { BaseButton, BaseInput }
 }
 </script>
-
-<style lang="scss">
-
-</style>
