@@ -6,6 +6,7 @@ const verifyJwt = require('../shared/auth/verify');
 
 router
   .post('/register', ctrl.register)
+  .post('/login', ctrl.login)
   .get('/verify/:token', verifyJwt, ctrl.verify)
   .get('/', ctrl.getAll);
 
