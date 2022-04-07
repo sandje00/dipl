@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import AppSidebar from './common/Sidebar.vue';
+import AppSidebar from './Sidebar';
 
 export default {
   name: 'docs-view',

@@ -47,12 +47,12 @@
 </template>
 
 <script>
-import AppLogo from './Logo';
+import AppLogo from './common/Logo';
 import { computed } from 'vue';
-import IconBoards from '../icons/IconBoards';
-import IconDocs from '../icons/IconDocs';
-import IconHome from '../icons/IconHome';
-import IconProjects from '../icons/IconProjects';
+import IconBoards from './icons/IconBoards';
+import IconDocs from './icons/IconDocs';
+import IconHome from './icons/IconHome';
+import IconProjects from './icons/IconProjects';
 import { useRoute } from 'vue-router';
 
 export default {
