@@ -8,10 +8,20 @@ $spacings: (
   "xxl": 2rem
 );
 
+$z-indices: (
+  "sidebar": 10
+);
+
 :root {
   @each $name, $value in $spacings {
     --spc-#{$name}: #{$value};
   }
+
+  @each $name, $value in $z-indices {
+    --z-#{$name}: #{$value};
+  }
+
+  --measure-sidebar-width: 5rem;
 }
 
 @each $name, $value in $spacings {

@@ -15,11 +15,11 @@ export default {
 <style lang="scss" scoped>
 .main {
   height: 100vh;
-  background-color: var(--color-background);
+  background-color: var(--color-background-secondary);
 
   .container {
     max-width: 30rem; // TODO Define inside _measures.scss
-    background-color: var(--color-background-form);
+    background-color: var(--color-background-primary);
     border: 1px solid var(--color-border);
     border-radius: 10px;
   }
