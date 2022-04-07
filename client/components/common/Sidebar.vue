@@ -4,36 +4,40 @@
     <nav class="flex-v align-items-center mt-xl">
       <router-link
         :to="{ name: 'overview' }"
+        :class="{ 'active': pathName === 'overview' }"
         class="navlink"
       >
-        <div class="flex-v align-items-center py-l">
+        <div class="flex-v align-items-center pa-m">
           <icon-home></icon-home>
           <span>Overview</span>
         </div>
       </router-link>
       <router-link
         :to="{ name: 'projects' }"
+        :class="{ 'active': pathName === 'projects' }"
         class="navlink"
       >
-        <div class="flex-v align-items-center py-l">
+        <div class="flex-v align-items-center pa-m">
           <icon-projects></icon-projects>
           <span>Projects</span>
         </div>
       </router-link>
       <router-link
         :to="{ name: 'boards' }"
+        :class="{ 'active': pathName === 'boards' }"
         class="navlink"
       >
-        <div class="flex-v align-items-center py-l">
+        <div class="flex-v align-items-center pa-m">
           <icon-boards></icon-boards>
           <span>Boards</span>
         </div>
       </router-link>
       <router-link
         :to="{ name: 'docs' }"
+        :class="{ 'active': pathName === 'docs' }"
         class="navlink"
       >
-        <div class="flex-v align-items-center py-l">
+        <div class="flex-v align-items-center pa-m">
           <icon-docs></icon-docs>
           <span>Docs</span>
         </div>
@@ -44,13 +48,20 @@
 
 <script>
 import AppLogo from './Logo';
+import { computed } from 'vue';
 import IconBoards from '../icons/IconBoards';
 import IconDocs from '../icons/IconDocs';
 import IconHome from '../icons/IconHome';
 import IconProjects from '../icons/IconProjects';
+import { useRoute } from 'vue-router';
 
 export default {
   name: 'app-sidebar',
+  setup() {
+    const pathName = computed(() => useRoute().name);
+
+    return { pathName };
+  },
   components: {
     AppLogo,
     IconBoards,
@@ -79,12 +90,18 @@ export default {
     font-size: 0.8rem;
     font-weight: 700;
 
-    &:hover {
+    &:hover, &.active {
       color: var(--color-primary);
 
       svg {
         fill: var(--color-primary);
       }
+    }
+
+    &.active {
+      max-width: calc(var(--measure-sidebar-width) * 0.85);
+      background-color: var(--color-primary-light);
+      border-radius: 10px;
     }
   }
 }
