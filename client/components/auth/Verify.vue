@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import api from '../../api/auth';
+import api from '@/api/auth';
 import BaseButton from '../common/BaseButton'
 import { ref } from 'vue';
 
