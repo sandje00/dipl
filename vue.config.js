@@ -9,6 +9,12 @@ module.exports = {
     }
   },
   configureWebpack: ({
+    resolve: {
+      alias: {
+        '@': path.join(__dirname, 'client')
+      },
+      extensions: [ '.js', '.vue' ]
+    },
     devServer: {
       proxy: {
         '/api': {

@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Auth from './components/auth';
-import Boards from './components/Boards';
-import Docs from './components/Docs';
-import Home from './components/Home';
-import Login from './components/auth/Login';
-import Overview from './components/Overview';
-import Projects from './components/Projects';
-import Register from './components/Register';
-import Verify from './components/auth/Verify';
+import Auth from '@/components/auth';
+import Boards from '@/components/Boards';
+import Docs from '@/components/Docs';
+import Home from '@/components/Home';
+import Login from '@/components/auth/Login';
+import Overview from '@/components/Overview';
+import Projects from '@/components/Projects';
+import Register from '@/components/Register';
+import Verify from '@/components/auth/Verify';
 
 const routes = [
   { path: '/', name: 'home', component: Home },

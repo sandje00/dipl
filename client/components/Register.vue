@@ -45,7 +45,7 @@
 
 <script>
 import { useForm, useField } from 'vee-validate';
-import api from '../api/users';
+import api from '@/api/users';
 import BaseButton from './common/BaseButton';
 import BaseInput from './common/BaseInput';
 import FormLayout from './common/FormLayout';
