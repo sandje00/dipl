@@ -9,8 +9,8 @@ function verify(token) {
   return client.get(url.verify(token));
 }
 
-function login(data) {
-  return client.post(url.login, data);
+function login(credentials) {
+  return client.post(url.login, credentials);
 }
 
 export default { verify, login };
