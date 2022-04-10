@@ -2,6 +2,7 @@
 
 require('express-async-errors');
 require('dotenv').config();
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const database = require('./shared/database');
 const errorHandler = require('./shared/errors/errorHandler');
@@ -13,6 +14,7 @@ const router = require('./router');
 
 const app = express();
 
+app.use(cookieParser());
 app.use(cors());
 app.use(helmet());
 app.use(express.json());

@@ -16,6 +16,7 @@ const User = require('./user.model');
 const msg = {
   SUCCESS_REGISTER: 'You have been registered successfully. Check your email to verify your account.',
   SUCCESS_VERIFY: 'Your email account has been verified.',
+  SUCCESS_LOGIN: 'You have logged in successfully.',
   USER_NOT_FOUND: 'User not found.',
   ALREADY_VERIFIED: 'This account has already been verified',
   WRONG_CREDENTIALS: 'Username and password are not matching'
@@ -62,7 +63,9 @@ async function login(req, res) {
     audience: Audience.Scope.Access,
     expiresIn: '5 days'
   });
-  return res.status(OK).json({ token });
+  res.cookie('access-token', token, { httpOnly: true });
+  res.cookie('is-authenticated', true);
+  return res.status(OK).json({ message: msg.SUCCESS_LOGIN });
 }
 
 async function getAll(req, res) {
