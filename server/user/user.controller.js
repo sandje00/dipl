@@ -63,8 +63,8 @@ async function login(req, res) {
     audience: Audience.Scope.Access,
     expiresIn: '5 days'
   });
-  res.cookie('access-token', token, { httpOnly: true });
-  res.cookie('is-authenticated', true);
+  res.cookie('accessToken', token, { httpOnly: true });
+  res.cookie('isAuthenticated', true);
   return res.status(OK).json({ message: msg.SUCCESS_LOGIN });
 }
 
