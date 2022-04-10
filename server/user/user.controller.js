@@ -19,7 +19,8 @@ const msg = {
   SUCCESS_LOGIN: 'You have logged in successfully.',
   USER_NOT_FOUND: 'User not found.',
   ALREADY_VERIFIED: 'This account has already been verified',
-  WRONG_CREDENTIALS: 'Username and password are not matching'
+  WRONG_CREDENTIALS: 'Username and password are not matching',
+  LOGOUT: 'You have logged out of your account'
 };
 
 async function register({ body }, res) {
@@ -68,6 +69,12 @@ async function login(req, res) {
   return res.status(OK).json({ message: msg.SUCCESS_LOGIN });
 }
 
+function logout(req, res) {
+  res.cookie('accessToken', null, { httpOnly: true });
+  res.cookie('isAuthenticated', false);
+  res.status(OK).send({ message: msg.LOGOUT });
+}
+
 async function getAll(req, res) {
   const users = await User.findAll();
   return res.status(OK).json({ users });
@@ -77,5 +84,6 @@ module.exports = {
   register,
   verify,
   login,
+  logout,
   getAll
 };

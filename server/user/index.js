@@ -9,7 +9,9 @@ router
   .post('/register', ctrl.register)
   .post('/login', ctrl.login)
   .get('/verify/:token', verifyJwt, ctrl.verify)
+  .use(authenticate)
+  .post('/logout', ctrl.logout)
   // Test route
-  .get('/', authenticate, ctrl.getAll);
+  .get('/', ctrl.getAll);
 
 module.exports = { path: '/users', router };
