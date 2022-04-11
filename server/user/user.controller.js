@@ -11,6 +11,7 @@ const {
 const { UniqueConstraintError, Op } = require('sequelize');
 const Audience = require('../shared/auth/audience');
 const HttpError = require('../shared/errors/httpError');
+const pick = require('lodash/pick');
 const User = require('./user.model');
 
 const msg = {
@@ -18,7 +19,8 @@ const msg = {
   SUCCESS_VERIFY: 'Your email account has been verified.',
   USER_NOT_FOUND: 'User not found.',
   ALREADY_VERIFIED: 'This account has already been verified',
-  WRONG_CREDENTIALS: 'Username and password are not matching'
+  WRONG_CREDENTIALS: 'Username and password are not matching',
+  LOGOUT: 'You have logged out of your account'
 };
 
 async function register({ body }, res) {
@@ -62,7 +64,17 @@ async function login(req, res) {
     audience: Audience.Scope.Access,
     expiresIn: '5 days'
   });
-  return res.status(OK).json({ token });
+  res.cookie('accessToken', token, { httpOnly: true });
+  res.cookie('isAuthenticated', true);
+  return res.status(OK).json({
+    user: pick(user, ['id', 'username', 'imgUrl', 'active'])
+  });
+}
+
+function logout(req, res) {
+  res.cookie('accessToken', null, { httpOnly: true });
+  res.cookie('isAuthenticated', false);
+  res.status(OK).json({ message: msg.LOGOUT });
 }
 
 async function getAll(req, res) {
@@ -74,5 +86,6 @@ module.exports = {
   register,
   verify,
   login,
+  logout,
   getAll
 };
