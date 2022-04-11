@@ -24,9 +24,10 @@
 
 <script>
 import { useForm, useField } from 'vee-validate';
-import api from '@/api/auth';
 import BaseButton from '../common/BaseButton';
 import BaseInput from '../common/BaseInput';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 export default {
   name: 'login-view',
@@ -40,14 +41,15 @@ export default {
 
     const { value: usernameOrEmail } = useField('usernameOrEmail');
     const { value: password } = useField('password');
+
+    const store = useStore();
+    const router = useRouter();
     // TODO Message snackbars
     const login = handleSubmit((values, { resetForm }) => {
-      api
-        .login(values)
-        .then(({ data: { token } }) => {
-          // TODO Auth cookies and redirection
-          console.log(token);
+      store.dispatch('auth/login', values)
+        .then(() => {
           resetForm();
+          router.push({ name: 'overview' });
         })
         .catch(({ data: { error } }) => console.log(error));
     });
