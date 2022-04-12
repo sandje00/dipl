@@ -74,7 +74,7 @@ async function login(req, res) {
 function logout(req, res) {
   res.cookie('accessToken', null, { httpOnly: true });
   res.cookie('isAuthenticated', false);
-  res.status(OK).json({ message: msg.LOGOUT });
+  return res.status(OK).json({ message: msg.LOGOUT });
 }
 
 async function getAll(req, res) {
