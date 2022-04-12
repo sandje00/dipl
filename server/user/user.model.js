@@ -75,6 +75,10 @@ class User extends Model {
     };
   }
 
+  static associate({ Project }) {
+    this.hasMany(Project, { foreignKey: { name: 'userId', field: 'user_id' } });
+  }
+
   async _hashPassword() {
     if (!this.password) return Promise.resolve(false);
     return bcrypt.genSalt(saltRounds)

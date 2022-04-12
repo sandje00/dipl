@@ -9,6 +9,7 @@ const { Sequelize } = require('sequelize');
 const { Umzug, SequelizeStorage } = require('umzug');
 
 const User = require('../../user/user.model');
+const Project = require('../../project/project.model');
 
 const sequelize = new Sequelize(config.url, config);
 const isProduction = process.env.NODE_ENV === 'production';
@@ -41,7 +42,8 @@ function initialize() {
 }
 
 const models = {
-  User: defineModel(User)
+  User: defineModel(User),
+  Project: defineModel(Project)
 };
 
 function defineModel(Model, connection = sequelize) {
