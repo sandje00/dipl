@@ -14,7 +14,7 @@ class Project extends Model {
       title: {
         type: STRING,
         allowNull: false,
-        unique: true
+        unique: { msg: 'Project with this title already exists.' }
       },
       description: {
         type: TEXT
