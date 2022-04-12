@@ -25,7 +25,7 @@ async function addNew(req, res) {
 async function getAll({ user: { id } }, res) {
   // TODO Add pagination
   const projects = await Project.findAll({ where: { userId: id } });
-  res.status(OK).json({ projects });
+  return res.status(OK).json({ projects });
 }
 
 module.exports = { addNew, getAll };
