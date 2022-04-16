@@ -9,7 +9,7 @@ $spacings: (
 );
 
 $z-indices: (
-  "sidebar": 10
+  "layout": 10
 );
 
 :root {
@@ -22,6 +22,7 @@ $z-indices: (
   }
 
   --measure-sidebar-width: 5rem;
+  --measure-header-height: 10rem;
 }
 
 @each $name, $value in $spacings {

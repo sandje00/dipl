@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import AppLayout from './AppLayout';
+import AppLayout from './layout';
 
 export default {
   name: 'boards-view',
