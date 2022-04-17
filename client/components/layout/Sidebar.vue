@@ -47,12 +47,12 @@
 </template>
 
 <script>
-import AppLogo from './common/Logo';
+import AppLogo from '../common/Logo';
 import { computed } from 'vue';
-import IconBoards from './icons/IconBoards';
-import IconDocs from './icons/IconDocs';
-import IconHome from './icons/IconHome';
-import IconProjects from './icons/IconProjects';
+import IconBoards from '../icons/IconBoards';
+import IconDocs from '../icons/IconDocs';
+import IconHome from '../icons/IconHome';
+import IconProjects from '../icons/IconProjects';
 import { useRoute } from 'vue-router';
 
 export default {
@@ -76,7 +76,6 @@ export default {
 .sidebar {
   height: 100vh;
   width: var(--measure-sidebar-width);
-  z-index: var(--z-sidebar);
   position: fixed;
   top: 0;
   left: 0;
