@@ -5,7 +5,7 @@ import Docs from '@/components/Docs';
 import Home from '@/components/Home';
 import Login from '@/components/auth/Login';
 import Overview from '@/components/Overview';
-import Projects from '@/components/Projects';
+import Projects from '@/components/projects';
 import Register from '@/components/Register';
 import Verify from '@/components/auth/Verify';
 
