@@ -1,5 +1,8 @@
 <template>
   <div class="flex-h flex-wrap pa-m projects-list">
+    <h2 v-if="!projects.length">
+      There are no projects to show.
+    </h2>
     <project-card
       v-for="project in projects"
       :key="project.id"
@@ -45,7 +48,3 @@ export default {
   components: { ProjectCard }
 }
 </script>
-
-<style lang="scss">
-
-</style>
