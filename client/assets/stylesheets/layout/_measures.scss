@@ -22,7 +22,7 @@ $z-indices: (
   }
 
   --measure-sidebar-width: 5rem;
-  --measure-header-section-height: 12rem;
+  --measure-header-height: 12rem;
 }
 
 @each $name, $value in $spacings {

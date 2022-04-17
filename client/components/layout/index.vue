@@ -23,11 +23,11 @@ export default {
 .main {
   height: 100vh;
   background-color: var(--color-background-secondary);
-  margin-top: var(--measure-header-section-height);
+  margin-top: var(--measure-header-height);
   margin-left: var(--measure-sidebar-width);
 
   .header-section {
-    height: var(--measure-header-section-height);
+    height: var(--measure-header-height);
     width: 100%;
     position: fixed;
     top: 0;
