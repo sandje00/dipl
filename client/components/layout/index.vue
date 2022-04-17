@@ -1,7 +1,7 @@
 <template>
   <div class="main">
-    <app-sidebar></app-sidebar>
-    <div class="header-section">
+    <app-sidebar class="z-index-layout"></app-sidebar>
+    <div class="z-index-layout header-section">
       <app-header></app-header>
       <slot name="page-header"></slot>
     </div>
@@ -29,11 +29,14 @@ export default {
   .header-section {
     height: var(--measure-header-section-height);
     width: 100%;
-    z-index: var(--z-layout);
     position: fixed;
     top: 0;
     background-color: var(--color-background-primary);
     border-bottom: 1px solid var(--color-border);
   }
+}
+
+.z-index-layout {
+  z-index: var(--z-layout);
 }
 </style>

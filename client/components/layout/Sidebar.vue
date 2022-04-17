@@ -76,7 +76,6 @@ export default {
 .sidebar {
   height: 100vh;
   width: var(--measure-sidebar-width);
-  z-index: var(--z-layout);
   position: fixed;
   top: 0;
   left: 0;
