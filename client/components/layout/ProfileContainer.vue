@@ -7,6 +7,7 @@
 
 <script>
 import { computed } from 'vue';
+import get from 'lodash/get';
 import IconAccount from '../icons/IconAccount';
 import { useStore } from 'vuex';
 
@@ -14,7 +15,7 @@ export default {
   name: 'profile-container',
   setup() {
     const store = useStore();
-    const username = computed(() => store.state.auth.user.username);
+    const username = computed(() => get(store.state, 'auth.user.username'));
 
     return { username }
   },
