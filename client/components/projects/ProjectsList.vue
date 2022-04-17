@@ -13,35 +13,21 @@
 </template>
 
 <script>
+import { onBeforeMount, ref } from 'vue';
+import api from '@/api/projects';
 import ProjectCard from './Project';
 
 export default {
   name: 'projects-list',
   setup() {
-    // TODO Fetch projects via API call
-    const projects = [
-      {
-        id: 1,
-        title: 'Test1',
-        description: 'Hahahahaha',
-        imgUrl: null,
-        userId: 1
-      },
-      {
-        id: 2,
-        title: 'Test2',
-        description: 'Hahahahaha',
-        imgUrl: null,
-        uderId: 1
-      },
-      {
-        id: 3,
-        title: 'Test3',
-        description: 'Hahahahaha',
-        imgUrl: null,
-        uderId: 1
-      }
-    ];
+    const projects = ref([]);
+    const fetchProjects = async () => {
+      return api.getAll()
+        .then(({ data }) => { projects.value = data.projects; })
+        .catch(err => console.log(err));
+    };
+
+    onBeforeMount(() => fetchProjects());
 
     return { projects };
   },
