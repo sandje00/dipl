@@ -1,14 +1,17 @@
 <template>
   <app-layout>
-    <h1>Test</h1>
+    <template v-slot:page-header>
+      <projects-header></projects-header>
+    </template>
   </app-layout>
 </template>
 
 <script>
 import AppLayout from '../layout';
+import ProjectsHeader from './ProjectsHeader';
 
 export default {
   name: 'projects-view',
-  components: { AppLayout }
+  components: { AppLayout, ProjectsHeader }
 }
 </script>
