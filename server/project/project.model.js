@@ -45,8 +45,10 @@ class Project extends Model {
     };
   }
 
-  static associate({ User }) {
-    this.belongsTo(User, { foreignKey: { name: 'userId', field: 'user_id' } });
+  static associate({ User, Task, Note }) {
+    this.belongsTo(User, { foreignKey: { name: 'userId', field: 'user_id', allowNull: false } });
+    this.hasMany(Task, { foreignKey: { name: 'projectId', field: 'project_id' } });
+    this.hasMany(Note, { foreignKey: { name: 'projectId', field: 'project_id' } });
   }
 }
 

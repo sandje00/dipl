@@ -56,6 +56,13 @@ class Task extends Model {
       timestamps: true
     };
   }
+
+  static associate({ User, Project, Task }) {
+    this.belongsTo(User, { foreignKey: { name: 'userId', field: 'user_id', allowNull: false } });
+    this.belongsTo(Project, { foreignKey: { name: 'projectId', field: 'project_id' } });
+    this.belongsTo(Task, { as: 'parent', foreignKey: { name: 'parentTaskId', field: 'parent_task_id' } });
+    this.hasMany(Task, { as: 'children', foreignKey: { name: 'parentTaskId', field: 'parent_task_id' } });
+  }
 }
 
 module.exports = Task;

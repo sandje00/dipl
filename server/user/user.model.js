@@ -75,8 +75,10 @@ class User extends Model {
     };
   }
 
-  static associate({ Project }) {
+  static associate({ Project, Task, Note }) {
     this.hasMany(Project, { foreignKey: { name: 'userId', field: 'user_id' } });
+    this.hasMany(Task, { foreignKey: { name: 'userId', field: 'user_id' } });
+    this.hasMany(Note, { foreignKey: { name: 'userId', field: 'user_id' } });
   }
 
   async _hashPassword() {

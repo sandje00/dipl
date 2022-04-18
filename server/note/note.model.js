@@ -41,6 +41,11 @@ class Note extends Model {
       timestamps: true
     };
   }
+
+  static associate({ User, Project }) {
+    this.belongsTo(User, { foreignKey: { name: 'userId', field: 'user_id', allowNull: false } });
+    this.belongsTo(Project, { foreignKey: { name: 'projectId', field: 'project_id' } });
+  }
 }
 
 module.exports = Note;

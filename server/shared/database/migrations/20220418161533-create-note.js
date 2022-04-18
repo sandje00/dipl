@@ -17,6 +17,23 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id'
+        },
+        field: 'user_id',
+        allowNull: false
+      },
+      projectId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'projects',
+          key: 'id'
+        },
+        field: 'project_id'
+      },
       createdAt: {
         type: Sequelize.DATE,
         field: 'created_at',

@@ -27,7 +27,8 @@ module.exports = {
           model: 'users',
           key: 'id'
         },
-        field: 'user_id'
+        field: 'user_id',
+        allowNull: false
       },
       createdAt: {
         type: Sequelize.DATE,
