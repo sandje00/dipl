@@ -2,7 +2,7 @@
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.createTable('projects', {
+    return queryInterface.createTable('tasks', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -11,15 +11,25 @@ module.exports = {
       },
       title: {
         type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
+        allowNull: false
       },
       description: {
         type: Sequelize.TEXT
       },
-      imgUrl: {
-        type: Sequelize.TEXT,
-        field: 'img_url'
+      type: {
+        type: Sequelize.ENUM,
+        values: ['TASK', 'SUBTASK', 'BUG'],
+        defaultValue: 'TASK'
+      },
+      priority: {
+        type: Sequelize.ENUM,
+        values: ['MINOR', 'MEDIUM', 'MAJOR'],
+        defaultValue: 'MEDIUM'
+      },
+      status: {
+        type: Sequelize.ENUM,
+        values: ['TO_DO', 'IN_PROGRESS', 'DONE'],
+        defaultValue: 'TO_DO'
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -29,6 +39,22 @@ module.exports = {
         },
         field: 'user_id',
         allowNull: false
+      },
+      projectId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'projects',
+          key: 'id'
+        },
+        field: 'project_id'
+      },
+      parentTaskId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'tasks',
+          key: 'id'
+        },
+        field: 'parent_task_id'
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -48,6 +74,6 @@ module.exports = {
   },
 
   async down (queryInterface) {
-    return queryInterface.dropTable('projects');
+    return queryInterface.dropTable('tasks');
   }
 };
