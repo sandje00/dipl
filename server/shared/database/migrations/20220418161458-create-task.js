@@ -16,6 +16,21 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
+      type: {
+        type: Sequelize.ENUM,
+        values: ['TASK', 'SUBTASK', 'BUG'],
+        defaultValue: 'TASK'
+      },
+      priority: {
+        type: Sequelize.ENUM,
+        values: ['MINOR', 'MEDIUM', 'MAJOR'],
+        defaultValue: 'MEDIUM'
+      },
+      status: {
+        type: Sequelize.ENUM,
+        values: ['TO_DO', 'IN_PROGRESS', 'DONE'],
+        defaultValue: 'TO_DO'
+      },
       userId: {
         type: Sequelize.INTEGER,
         references: {
