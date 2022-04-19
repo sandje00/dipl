@@ -73,6 +73,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../assets/stylesheets/base/_typography.scss';
+
 .sidebar {
   height: 100vh;
   width: var(--measure-sidebar-width);
@@ -85,9 +87,8 @@ export default {
 
   .navlink {
     color: var(--color-text-primary);
-    // TODO Define inside _typography.scss
-    font-size: 0.8rem;
-    font-weight: 700;
+    font-size: $font-size-small;
+    font-weight: $font-weight-bold;
 
     &:hover, &.active {
       color: var(--color-primary);

@@ -24,14 +24,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../assets/stylesheets/base/_typography.scss';
+
 .profile-container {
   color: var(--color-text-secondary);
   cursor: pointer;
 
   .username {
     display: inline-block;
-    font-weight: 700;
-    font-size: 1.2rem;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-large;
 
     &::after {
       content: "";
