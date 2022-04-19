@@ -24,14 +24,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../assets/stylesheets/base/_typography.scss';
+
 .profile-container {
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
   cursor: pointer;
 
   .username {
     display: inline-block;
-    font-weight: 700;
-    font-size: 1.2rem;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-large;
 
     &::after {
       content: "";
@@ -42,7 +44,7 @@ export default {
       margin-left: var(--spc-s);
       border-left: 5px solid transparent;
       border-right: 5px solid transparent;
-      border-top: 5px solid var(--color-text-secondary);
+      border-top: 5px solid var(--color-text-primary);
     }
   }
 }

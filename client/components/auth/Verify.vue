@@ -42,9 +42,11 @@ export default {
 </script>
 
 <style lang="scss" style>
+@import '../../assets/stylesheets/base/_typography.scss';
+
 .text {
-  color: var(--color-text-secondary);
-  font-size: 1.2rem; // TODO Define inside _typography.scss
+  color: var(--color-text-primary);
+  font-size: $font-size-large;
   text-align: center;
 }
 </style>

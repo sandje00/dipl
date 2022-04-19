@@ -21,7 +21,7 @@ export default {
     viewBox: { type: String, default: '0 0 24 24' },
     color: {
       type: String,
-      default: 'text-primary',
+      default: 'text-secondary',
       validator: val => colors.includes(val)
     }
   }

@@ -11,8 +11,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../assets/stylesheets/base/_typography.scss';
+
 .button {
-  font-size: 1rem;
+  font-size: $font-size-regular;
   background: none;
   border: none;
   cursor: pointer;
