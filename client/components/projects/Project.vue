@@ -28,7 +28,7 @@ $project-card-size: 20rem;
   cursor: pointer;
 
   &-title {
-    color: var(--color-text-secondary);
+    color: var(--color-text-primary);
     text-align: center;
   }
 

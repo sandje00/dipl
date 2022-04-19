@@ -31,7 +31,7 @@ export default {
 .input {
   font-size: inherit;
   background: none;
-  border: 1px solid var(--color-text-primary);
+  border: 1px solid var(--color-text-secondary);
   border-radius: 5px;
 
   &:focus {

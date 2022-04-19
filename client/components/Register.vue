@@ -101,7 +101,7 @@ export default {
 
 .success-message {
   display: inline-block;
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
   font-size: $font-size-large;
 }
 </style>

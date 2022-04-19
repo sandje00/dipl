@@ -45,7 +45,7 @@ export default {
 @import '../../assets/stylesheets/base/_typography.scss';
 
 .text {
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
   font-size: $font-size-large;
   text-align: center;
 }

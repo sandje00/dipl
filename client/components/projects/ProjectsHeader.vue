@@ -19,7 +19,7 @@ export default {
 <style lang="scss" scoped>
 .page {
   &-title {
-    color: var(--color-text-secondary);
+    color: var(--color-text-primary);
   }
 
   &-controls {

@@ -86,7 +86,7 @@ export default {
   overflow-x: hidden;
 
   .navlink {
-    color: var(--color-text-primary);
+    color: var(--color-text-secondary);
     font-size: $font-size-small;
     font-weight: $font-weight-bold;
 

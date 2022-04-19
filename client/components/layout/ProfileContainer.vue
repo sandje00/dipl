@@ -27,7 +27,7 @@ export default {
 @import '../../assets/stylesheets/base/_typography.scss';
 
 .profile-container {
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
   cursor: pointer;
 
   .username {
@@ -44,7 +44,7 @@ export default {
       margin-left: var(--spc-s);
       border-left: 5px solid transparent;
       border-right: 5px solid transparent;
-      border-top: 5px solid var(--color-text-secondary);
+      border-top: 5px solid var(--color-text-primary);
     }
   }
 }
