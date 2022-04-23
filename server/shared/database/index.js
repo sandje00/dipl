@@ -1,15 +1,17 @@
 'use strict';
 
+const { Umzug, SequelizeStorage } = require('umzug');
 const { db: config } = require('../../config');
 const invoke = require('lodash/invoke');
 const { logger } = require('../logger');
 const path = require('path');
 const pick = require('lodash/pick');
 const { Sequelize } = require('sequelize');
-const { Umzug, SequelizeStorage } = require('umzug');
 
 const User = require('../../user/user.model');
 const Project = require('../../project/project.model');
+const Task = require('../../task/task.model');
+const Note = require('../../note/note.model');
 
 const sequelize = new Sequelize(config.url, config);
 const isProduction = process.env.NODE_ENV === 'production';
@@ -43,7 +45,9 @@ function initialize() {
 
 const models = {
   User: defineModel(User),
-  Project: defineModel(Project)
+  Project: defineModel(Project),
+  Task: defineModel(Task),
+  Note: defineModel(Note)
 };
 
 function defineModel(Model, connection = sequelize) {

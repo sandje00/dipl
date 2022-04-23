@@ -13,12 +13,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$form-layout-max-width: 30rem;
+
 .main {
   height: 100vh;
   background-color: var(--color-background-secondary);
 
   .container {
-    max-width: 30rem; // TODO Define inside _measures.scss
+    max-width: $form-layout-max-width;
     background-color: var(--color-background-primary);
     border: 1px solid var(--color-border);
     border-radius: 10px;

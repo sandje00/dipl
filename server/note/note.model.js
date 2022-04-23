@@ -2,7 +2,7 @@
 
 const { Model } = require('sequelize');
 
-class Project extends Model {
+class Note extends Model {
   static fields({ INTEGER, STRING, TEXT, DATE }) {
     return {
       id: {
@@ -14,12 +14,9 @@ class Project extends Model {
       title: {
         type: STRING,
         allowNull: false,
-        unique: { msg: 'Project with this title already exists.' }
+        unique: { msg: 'A note with this title already exists.' }
       },
       description: {
-        type: TEXT
-      },
-      imgUrl: {
         type: TEXT
       },
       createdAt: {
@@ -38,18 +35,17 @@ class Project extends Model {
 
   static options() {
     return {
-      tableName: 'projects',
+      tableName: 'notes',
       underscored: true,
       paranoid: true,
       timestamps: true
     };
   }
 
-  static associate({ User, Task, Note }) {
+  static associate({ User, Project }) {
     this.belongsTo(User, { foreignKey: { name: 'userId', field: 'user_id', allowNull: false } });
-    this.hasMany(Task, { foreignKey: { name: 'projectId', field: 'project_id' } });
-    this.hasMany(Note, { foreignKey: { name: 'projectId', field: 'project_id' } });
+    this.belongsTo(Project, { foreignKey: { name: 'projectId', field: 'project_id' } });
   }
 }
 
-module.exports = Project;
+module.exports = Note;

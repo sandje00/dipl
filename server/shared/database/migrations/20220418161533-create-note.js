@@ -2,7 +2,7 @@
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.createTable('projects', {
+    return queryInterface.createTable('notes', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -17,10 +17,6 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
-      imgUrl: {
-        type: Sequelize.TEXT,
-        field: 'img_url'
-      },
       userId: {
         type: Sequelize.INTEGER,
         references: {
@@ -29,6 +25,14 @@ module.exports = {
         },
         field: 'user_id',
         allowNull: false
+      },
+      projectId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'projects',
+          key: 'id'
+        },
+        field: 'project_id'
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -48,6 +52,6 @@ module.exports = {
   },
 
   async down (queryInterface) {
-    return queryInterface.dropTable('projects');
+    return queryInterface.dropTable('notes');
   }
 };

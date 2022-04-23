@@ -2,7 +2,7 @@
   <label v-if="label">{{ label }}</label>
   <input
     :value="modelValue"
-    :class="{ error }"
+    :class="{ error, borderless }"
     v-bind="{...$attrs, onInput: updateModelValue }"
     class="mt-s px-m py-s input"
   >
@@ -17,7 +17,8 @@ export default {
   props: {
     label: { type: String, default: '' },
     modelValue: { type: String, default: '' },
-    error: { type: String, default: '' }
+    error: { type: String, default: '' },
+    borderless: { type: Boolean, default: false }
   },
   setup(props, context) {
     const { updateModelValue } = useModelValue(props, context);
@@ -30,7 +31,7 @@ export default {
 .input {
   font-size: inherit;
   background: none;
-  border: 1px solid var(--color-text-primary);
+  border: 1px solid var(--color-text-secondary);
   border-radius: 5px;
 
   &:focus {
@@ -39,6 +40,10 @@ export default {
 
   &.error {
     border-color: var(--color-error);
+  }
+
+  &.borderless {
+    border: none;
   }
 }
 
