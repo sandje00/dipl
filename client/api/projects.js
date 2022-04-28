@@ -1,11 +1,16 @@
 import client from './client';
 
 const url = {
-  getAll: '/projects'
+  getAll: '/projects',
+  addNew: '/projects'
 };
 
 function getAll() {
   return client.get(url.getAll);
 }
 
-export default { getAll };
+function addNew(project) {
+  return client.post(url.addNew, project);
+}
+
+export default { getAll, addNew };

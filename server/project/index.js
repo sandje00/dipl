@@ -6,6 +6,7 @@ const router = require('express').Router();
 
 router
   .use(authenticate)
-  .get('/', ctrl.getAll);
+  .get('/', ctrl.getAll)
+  .post('/', ctrl.addNew);
 
 module.exports = { path: '/projects', router };
