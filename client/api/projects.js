@@ -3,7 +3,8 @@ import client from './client';
 const url = {
   getAll: '/projects',
   addNew: '/projects',
-  getOne: id => `/projects/${id}`
+  getOne: id => `/projects/${id}`,
+  edit: id => `/projects/${id}`
 };
 
 function getAll() {
@@ -18,8 +19,13 @@ function getOne(projectId) {
   return client.post(url.getOne(projectId));
 }
 
+function edit(projectId, data) {
+  return client.patch(url.edit(projectId), data);
+}
+
 export default {
   getAll,
   addNew,
-  getOne
+  getOne,
+  edit
 };

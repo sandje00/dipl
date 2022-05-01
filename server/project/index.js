@@ -13,7 +13,8 @@ router
   .use(authenticate)
   .get('/', ctrl.getAll)
   .post('/', ctrl.addNew)
-  .get('/:projectId', ctrl.getOne);
+  .get('/:projectId', ctrl.getOne)
+  .patch('/:projectId', ctrl.edit);
 
 module.exports = { path: '/projects', router };
 
