@@ -1,6 +1,6 @@
 'use strict';
 
-const { BAD_REQUEST, CREATED } = require('../shared/errors/status')
+const { BAD_REQUEST, CREATED, OK } = require('../shared/errors/status')
 const HttpError = require('../shared/errors/httpError');
 const Task = require('./task.model');
 const { UniqueConstraintError } = require('sequelize');
@@ -22,6 +22,11 @@ async function addNew(req, res) {
   return res.status(CREATED).json({ message: msg.SUCCESS_ADD_TASK });
 }
 
+function getOne({ task }, res) {
+  return res.status(OK).json({ task });
+}
+
 module.exports = {
-  addNew
+  addNew,
+  getOne
 };

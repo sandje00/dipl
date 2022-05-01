@@ -1,11 +1,19 @@
 import client from './client';
 
 const url = {
-  addNew: '/tasks'
+  addNew: '/tasks',
+  getOne: id => `/tasks/${id}`
 };
 
-function addNew(project) {
-  return client.post(url.addNew, project);
+function addNew(task) {
+  return client.post(url.addNew, task);
 }
 
-export default { addNew };
+function getOne(taskId) {
+  return client.post(url.getOne(taskId));
+}
+
+export default {
+  addNew,
+  getOne
+};
