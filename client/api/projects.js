@@ -2,7 +2,8 @@ import client from './client';
 
 const url = {
   getAll: '/projects',
-  addNew: '/projects'
+  addNew: '/projects',
+  getOne: id => `/projects/${id}`
 };
 
 function getAll() {
@@ -13,4 +14,12 @@ function addNew(project) {
   return client.post(url.addNew, project);
 }
 
-export default { getAll, addNew };
+function getOne(projectId) {
+  return client.post(url.getOne(projectId));
+}
+
+export default {
+  getAll,
+  addNew,
+  getOne
+};

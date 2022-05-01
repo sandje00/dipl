@@ -28,4 +28,12 @@ async function addNew(req, res) {
   return res.status(CREATED).json({ message: msg.SUCCESS_ADD_PROJECT });
 }
 
-module.exports = { getAll, addNew };
+function getOne({ project }, res) {
+  return res.status(OK).json({ project });
+}
+
+module.exports = {
+  getAll,
+  addNew,
+  getOne
+};
