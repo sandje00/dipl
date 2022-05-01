@@ -12,7 +12,8 @@ router.param('taskId', getTask);
 router
   .use(authenticate)
   .post('/', ctrl.addNew)
-  .get('/:taskId', ctrl.getOne);
+  .get('/:taskId', ctrl.getOne)
+  .patch('/:taskId', ctrl.edit);
 
 module.exports = { path: '/tasks', router };
 

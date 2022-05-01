@@ -6,7 +6,8 @@ const Task = require('./task.model');
 const { UniqueConstraintError } = require('sequelize');
 
 const msg = {
-  SUCCESS_ADD_TASK: 'You have added new task successfully'
+  SUCCESS_ADD_TASK: 'You have added new task successfully.',
+  SUCCESS_EDIT_TASK: 'You have edited task successfully.'
 };
 
 async function addNew(req, res) {
@@ -26,7 +27,21 @@ function getOne({ task }, res) {
   return res.status(OK).json({ task });
 }
 
+async function edit({ body, task }, res) {
+  try {
+    task.set({ ...body });
+    await task.save();
+  } catch (err) {
+    if (err instanceof UniqueConstraintError) {
+      throw new HttpError(BAD_REQUEST, err.errors[0].message);
+    }
+    throw err;
+  }
+  return res.status(OK).json({ message: msg.SUCCESS_EDIT_TASK });
+}
+
 module.exports = {
   addNew,
-  getOne
+  getOne,
+  edit
 };
