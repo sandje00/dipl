@@ -12,9 +12,9 @@ router.param('projectId', getProject);
 router
   .use(authenticate)
   .get('/', ctrl.getAll)
-  .post('/', ctrl.addNew)
+  .post('/', ctrl.create)
   .get('/:projectId', ctrl.getOne)
-  .patch('/:projectId', ctrl.edit);
+  .patch('/:projectId', ctrl.update);
 
 module.exports = { path: '/projects', router };
 

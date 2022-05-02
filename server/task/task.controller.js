@@ -7,10 +7,10 @@ const { UniqueConstraintError } = require('sequelize');
 
 const msg = {
   SUCCESS_ADD_TASK: 'You have added new task successfully.',
-  SUCCESS_EDIT_TASK: 'You have edited task successfully.'
+  SUCCESS_UPDATE_TASK: 'You have updated task successfully.'
 };
 
-async function addNew(req, res) {
+async function create(req, res) {
   const newTask = { ...req.body, userId: req.user.id };
   try {
     await Task.create(newTask);
@@ -27,7 +27,7 @@ function getOne({ task }, res) {
   return res.status(OK).json({ task });
 }
 
-async function edit({ body, task }, res) {
+async function update({ body, task }, res) {
   try {
     task.set({ ...body });
     await task.save();
@@ -37,11 +37,11 @@ async function edit({ body, task }, res) {
     }
     throw err;
   }
-  return res.status(OK).json({ message: msg.SUCCESS_EDIT_TASK });
+  return res.status(OK).json({ message: msg.SUCCESS_UPDATE_TASK });
 }
 
 module.exports = {
-  addNew,
+  create,
   getOne,
-  edit
+  update
 };

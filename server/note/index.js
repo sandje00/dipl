@@ -11,9 +11,9 @@ router.param('noteId', getNote);
 
 router
   .use(authenticate)
-  .post('/', ctrl.addNew)
+  .post('/', ctrl.create)
   .get('/:noteId', ctrl.getOne)
-  .patch('/:noteId', ctrl.edit);
+  .patch('/:noteId', ctrl.update);
 
 module.exports = { path: '/notes', router };
 

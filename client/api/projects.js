@@ -2,30 +2,30 @@ import client from './client';
 
 const url = {
   getAll: '/projects',
-  addNew: '/projects',
+  create: '/projects',
   getOne: id => `/projects/${id}`,
-  edit: id => `/projects/${id}`
+  update: id => `/projects/${id}`
 };
 
 function getAll() {
   return client.get(url.getAll);
 }
 
-function addNew(project) {
-  return client.post(url.addNew, project);
+function create(project) {
+  return client.post(url.create, project);
 }
 
 function getOne(projectId) {
   return client.get(url.getOne(projectId));
 }
 
-function edit(projectId, data) {
-  return client.patch(url.edit(projectId), data);
+function update(projectId, data) {
+  return client.patch(url.update(projectId), data);
 }
 
 export default {
   getAll,
-  addNew,
+  create,
   getOne,
-  edit
+  update
 };

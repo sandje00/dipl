@@ -1,25 +1,25 @@
 import client from './client';
 
 const url = {
-  addNew: '/tasks',
+  create: '/tasks',
   getOne: id => `/tasks/${id}`,
-  edit: id => `/tasks/${id}`
+  update: id => `/tasks/${id}`
 };
 
-function addNew(task) {
-  return client.post(url.addNew, task);
+function create(task) {
+  return client.post(url.create, task);
 }
 
 function getOne(taskId) {
   return client.get(url.getOne(taskId));
 }
 
-function edit(taskId, data) {
-  return client.patch(url.edit(taskId), data);
+function update(taskId, data) {
+  return client.patch(url.update(taskId), data);
 }
 
 export default {
-  addNew,
+  create,
   getOne,
-  edit
+  update
 };
