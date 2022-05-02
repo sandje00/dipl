@@ -17,7 +17,7 @@ router
 
 module.exports = { path: '/notes', router };
 
-function getNote(req, _, next, noteId) {
+async function getNote(req, _, next, noteId) {
   return Note.findByPk(noteId)
     .then(note => {
       if (!note) throw new HttpError(NOT_FOUND, { message: 'Note not found.' });

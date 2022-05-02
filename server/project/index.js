@@ -18,7 +18,7 @@ router
 
 module.exports = { path: '/projects', router };
 
-function getProject(req, _, next, projectId) {
+async function getProject(req, _, next, projectId) {
   return Project.findByPk(projectId)
     .then(project => {
       if (!project) throw new HttpError(NOT_FOUND, { message: 'Project not found.' });

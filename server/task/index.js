@@ -17,7 +17,7 @@ router
 
 module.exports = { path: '/tasks', router };
 
-function getTask(req, _, next, taskId) {
+async function getTask(req, _, next, taskId) {
   return Task.findByPk(taskId)
     .then(task => {
       if (!task) throw new HttpError(NOT_FOUND, { message: 'Task not found.' });
