@@ -11,7 +11,7 @@ function addNew(task) {
 }
 
 function getOne(taskId) {
-  return client.post(url.getOne(taskId));
+  return client.get(url.getOne(taskId));
 }
 
 function edit(taskId, data) {

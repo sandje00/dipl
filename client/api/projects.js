@@ -16,7 +16,7 @@ function addNew(project) {
 }
 
 function getOne(projectId) {
-  return client.post(url.getOne(projectId));
+  return client.get(url.getOne(projectId));
 }
 
 function edit(projectId, data) {
