@@ -1,6 +1,6 @@
 'use strict';
 
-const { BAD_REQUEST, CREATED, OK } = require('../shared/errors/status')
+const { BAD_REQUEST, CREATED, OK } = require('../shared/errors/status');
 const HttpError = require('../shared/errors/httpError');
 const Note = require('./note.model');
 const { UniqueConstraintError } = require('sequelize');
@@ -9,6 +9,16 @@ const msg = {
   SUCCESS_ADD_NOTE: 'You have added a note successfully.',
   SUCCESS_UPDATE_NOTE: 'You have updated a note successfully.'
 };
+
+async function getAll({ user: { id: userId }, params: { projectId } }, res) {
+  const notes = await Note.findAll({
+    where: {
+      user_id: userId,
+      project_id: projectId || null
+    }
+  });
+  return res.status(OK).json({ notes });
+}
 
 async function create(req, res) {
   const newNote = { ...req.body, userId: req.user.id };
@@ -41,6 +51,7 @@ async function update({ body, note }, res) {
 }
 
 module.exports = {
+  getAll,
   create,
   getOne,
   update

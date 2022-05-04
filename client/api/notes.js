@@ -1,10 +1,15 @@
 import client from './client';
 
 const url = {
-  addNew: '/notes',
+  getAll: id => `/notes/${id || ''}`,
+  create: '/notes',
   getOne: id => `/notes/${id}`,
   update: id => `/notes/${id}`
 };
+
+function getAll(projectId) {
+  return client.get(url.getAll(projectId));
+}
 
 function create(note) {
   return client.post(url.create, note);
@@ -19,6 +24,7 @@ function update(noteId, data) {
 }
 
 export default {
+  getAll,
   create,
   getOne,
   update

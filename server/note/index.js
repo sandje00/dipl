@@ -11,6 +11,7 @@ router.param('noteId', getNote);
 
 router
   .use(authenticate)
+  .get('/:projectId?', ctrl.getAll)
   .post('/', ctrl.create)
   .get('/:noteId', ctrl.getOne)
   .patch('/:noteId', ctrl.update);
