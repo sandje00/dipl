@@ -8,6 +8,7 @@ const verifyJwt = require('../shared/auth/verify');
 router
   .post('/register', ctrl.register)
   .post('/login', ctrl.login)
+  .post('/forgotPassword', ctrl.forgotPassword)
   .get('/verify/:token', verifyJwt, ctrl.verify)
   .use(authenticate)
   .post('/logout', ctrl.logout)

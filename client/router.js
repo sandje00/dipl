@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Auth from '@/components/auth';
 import Boards from '@/components/Boards';
 import Docs from '@/components/Docs';
+import ForgotPassword from '@/components/auth/ForgotPassword';
 import { getCookieValue } from '@/utils/cookie';
 import Home from '@/components/Home';
 import Login from '@/components/auth/Login';
@@ -18,7 +19,8 @@ const routes = [
     component: Auth,
     children: [
       { path: 'verify/:token', component: Verify, props: true },
-      { path: 'login', name: 'login', component: Login }
+      { path: 'login', name: 'login', component: Login },
+      { path: 'forgotPassword', name: 'forgotPassword', component: ForgotPassword }
     ]
   },
   {

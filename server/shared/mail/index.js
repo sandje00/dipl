@@ -22,4 +22,17 @@ function sendVerificationEmail(token, email) {
   });
 }
 
-module.exports = { sendVerificationEmail };
+function sendResetTokenEmail(token, email) {
+  const link = `${CLIENT_URL}/auth/reset/${token}`;
+  return sendEmail({
+    to: email,
+    subject: 'Reset your password',
+    html: `<p>Please, click on the following <a href="${link}">link</a> to reset your password</p>
+          <br><p>If you did not request this, please ignore this message.</p>`
+  });
+}
+
+module.exports = {
+  sendVerificationEmail,
+  sendResetTokenEmail
+};

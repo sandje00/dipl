@@ -3,7 +3,8 @@ import client from './client';
 const url = {
   verify: token => `/users/verify/${token}`,
   login: '/users/login',
-  logout: '/users/logout'
+  logout: '/users/logout',
+  forgotPassword: '/users/forgotPassword'
 };
 
 function verify(token) {
@@ -18,4 +19,13 @@ function logout() {
   return client.post(url.logout);
 }
 
-export default { verify, login, logout };
+function forgotPassword(email) {
+  return client.post(url.forgotPassword, { email });
+}
+
+export default {
+  verify,
+  login,
+  logout,
+  forgotPassword
+};
