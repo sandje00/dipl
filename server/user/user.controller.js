@@ -18,6 +18,7 @@ const msg = {
   SUCCESS_REGISTER: 'You have been registered successfully. Check your email to verify your account.',
   SUCCESS_VERIFY: 'Your email account has been verified.',
   SUCCESS_FORGOT: 'Password reset email has been sent. Check your email to proceed.',
+  SUCCESS_RESET: 'Your password has been reset successfully.',
   USER_NOT_FOUND: 'User not found.',
   ALREADY_VERIFIED: 'This account has already been verified',
   WRONG_CREDENTIALS: 'Username and password are not matching',
@@ -91,6 +92,16 @@ async function forgotPassword({ body }, res) {
   });
 }
 
+async function resetPassword({ body: { password }, id }, res) {
+  const user = await User.findByPk(id);
+  if (!user) throw new HttpError(NOT_FOUND, msg.USER_NOT_FOUND);
+  user.password = password;
+  await user.save();
+  return res.status(OK).json({
+    message: msg.SUCCESS_RESET
+  });
+}
+
 async function getAll(req, res) {
   const users = await User.findAll();
   return res.status(OK).json({ users });
@@ -102,5 +113,6 @@ module.exports = {
   login,
   logout,
   forgotPassword,
+  resetPassword,
   getAll
 };

@@ -20,7 +20,7 @@
       Log In
     </base-button>
     <router-link
-      :to="{ name: 'forgotPassword' }"
+      :to="{ name: 'forgot-password' }"
       class="link pt-xl align-self-center">
       Forgot password?
     </router-link>
