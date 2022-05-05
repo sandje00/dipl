@@ -9,6 +9,7 @@ import Login from '@/components/auth/Login';
 import Overview from '@/components/Overview';
 import Projects from '@/components/projects';
 import Register from '@/components/Register';
+import ResetPassword from '@/components/auth/ResetPassword';
 import Verify from '@/components/auth/Verify';
 
 const routes = [
@@ -20,7 +21,13 @@ const routes = [
     children: [
       { path: 'verify/:token', component: Verify, props: true },
       { path: 'login', name: 'login', component: Login },
-      { path: 'forgotPassword', name: 'forgotPassword', component: ForgotPassword }
+      { path: 'forgotPassword', name: 'forgotPassword', component: ForgotPassword },
+      {
+        path: 'reset/:token',
+        name: 'resetPassword',
+        component: ResetPassword,
+        props: true
+      }
     ]
   },
   {
