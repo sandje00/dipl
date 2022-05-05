@@ -10,6 +10,7 @@ router
   .post('/login', ctrl.login)
   .post('/forgotPassword', ctrl.forgotPassword)
   .get('/verify/:token', verifyJwt, ctrl.verify)
+  .post('/resetPassword', verifyJwt, ctrl.resetPassword)
   .use(authenticate)
   .post('/logout', ctrl.logout)
   // Test route
