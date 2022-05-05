@@ -4,8 +4,8 @@ const url = {
   verify: token => `/users/verify/${token}`,
   login: '/users/login',
   logout: '/users/logout',
-  forgotPassword: '/users/forgotPassword',
-  resetPassword: '/users/resetPassword'
+  forgotPassword: '/users/forgot-password',
+  resetPassword: '/users/reset-password'
 };
 
 function verify(token) {

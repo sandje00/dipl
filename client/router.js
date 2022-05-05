@@ -21,10 +21,10 @@ const routes = [
     children: [
       { path: 'verify/:token', component: Verify, props: true },
       { path: 'login', name: 'login', component: Login },
-      { path: 'forgotPassword', name: 'forgotPassword', component: ForgotPassword },
+      { path: 'forgot-password', name: 'forgot-password', component: ForgotPassword },
       {
         path: 'reset/:token',
-        name: 'resetPassword',
+        name: 'reset-password',
         component: ResetPassword,
         props: true
       }
