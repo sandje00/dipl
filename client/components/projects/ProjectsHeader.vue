@@ -1,6 +1,6 @@
 <template>
   <h1 class="ml-xl pt-m page-title">Projects</h1>
-  <div class="flex-h page-navigation">
+  <div class="flex-h ml-xl pt-l page-navigation">
     <base-tab
       title="All Projects"
       :to="{ name: 'all-projects' }"
@@ -18,7 +18,7 @@ import BaseTab from '../common/BaseTab';
 export default {
   name: 'projects-header',
   components: { BaseTab }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -26,10 +26,5 @@ export default {
   &-title {
     color: var(--color-text-primary);
   }
-
-  /* &-navigation {
-    // TODO The same as in ProfileContainer.vue
-    width: 95%;
-  } */
 }
 </style>

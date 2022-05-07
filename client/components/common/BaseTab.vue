@@ -1,7 +1,7 @@
 <template>
   <router-link
     :to="to"
-    class="base-tab">
+    class="pa-s base-tab">
     {{ title }}
   </router-link>
 </template>
@@ -17,7 +17,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.base-tab {
+@import '../../assets/stylesheets/base/_typography.scss';
 
+.base-tab {
+  color: var(--color-text-secondary);
+  font-weight: $font-weight-bold;
+
+  &:hover {
+    color: var(--color-primary);
+  }
+
+  &.router-link-exact-active {
+    color: var(--color-primary);
+    background-color: var(--color-primary-light);
+    border-radius: 5px;
+  }
 }
 </style>
