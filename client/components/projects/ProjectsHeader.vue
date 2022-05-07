@@ -1,6 +1,6 @@
 <template>
   <h1 class="ml-xl pt-m page-title">Projects</h1>
-  <div class="flex-h ml-xl pt-l page-navigation">
+  <div class="flex-h ml-l pt-l page-navigation">
     <base-tab
       title="All Projects"
       :to="{ name: 'all-projects' }"
