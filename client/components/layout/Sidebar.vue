@@ -13,8 +13,8 @@
         </div>
       </router-link>
       <router-link
-        :to="{ name: 'projects' }"
-        :class="{ 'active': pathName === 'projects' }"
+        :to="{ name: 'all-projects' }"
+        :class="{ 'active': pathName === 'all-projects' }"
         class="navlink"
       >
         <div class="flex-v align-items-center pa-m">
