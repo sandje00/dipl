@@ -1,30 +1,30 @@
 <template>
   <h1 class="ml-xl pt-m page-title">Projects</h1>
-  <div class="flex-h justify-end page-controls">
-    <base-button class="mr-m">
-      New Project +
-    </base-button>
+  <div class="flex-h ml-l pt-l page-navigation">
+    <base-tab
+      title="All Projects"
+      :to="{ name: 'all-projects' }"
+    ></base-tab>
+    <base-tab
+      title="New Project"
+      :to="{ name: 'new-project' }"
+    ></base-tab>
   </div>
 </template>
 
 <script>
-import BaseButton from '../common/BaseButton';
+import BaseTab from '../common/BaseTab';
 
 export default {
   name: 'projects-header',
-  components: { BaseButton }
-}
+  components: { BaseTab }
+};
 </script>
 
 <style lang="scss" scoped>
 .page {
   &-title {
     color: var(--color-text-primary);
-  }
-
-  &-controls {
-    // TODO The same as in ProfileContainer.vue
-    width: 95%;
   }
 }
 </style>
