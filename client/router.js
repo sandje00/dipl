@@ -43,13 +43,13 @@ const routes = [
     component: Projects,
     children: [
       {
-        path: '/',
+        path: 'all',
         name: 'all-projects',
         component: AllProjects,
         meta: { requiresAuth: true }
       },
       {
-        path: '/new',
+        path: 'new',
         name: 'new-project',
         component: NewProject,
         meta: { requiresAuth: true }
