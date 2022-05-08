@@ -1,5 +1,8 @@
 <template>
-  <div class="pa-m">
+  <div class="pa-m container">
+    <base-button class="edit-button" neutral>
+      Edit
+    </base-button>
     <span class="mt-m label">Title:</span>
     <h2 class="title">{{ project.title }}</h2>
     <span class="mt-l label">Description:</span>
@@ -13,6 +16,7 @@
 <script>
 import { onBeforeMount, ref } from 'vue';
 import api from '@/api/projects';
+import BaseButton from '../common/BaseButton';
 
 export default {
   name: 'project-details',
@@ -30,19 +34,30 @@ export default {
     onBeforeMount(() => fetchProject());
 
     return { project };
-  }
+  },
+  components: { BaseButton }
 };
 </script>
 
 <style lang="scss" scoped>
 @import '../../assets/stylesheets/base/_typography.scss';
 
-.label {
-  // TODO Extract to separate .scss file
-  display: inline-block;
-}
+.container {
+  position: relative;
 
-.description {
-  font-size: $font-size-large;
+  .edit-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .label {
+    // TODO Extract to separate .scss file
+    display: inline-block;
+  }
+
+  .description {
+    font-size: $font-size-large;
+  }
 }
 </style>
