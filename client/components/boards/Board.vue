@@ -11,6 +11,7 @@
           <h2>+</h2>
         </base-button>
       </div>
+      <task-list :tasks="tasksTodo"></task-list>
     </div>
     <div class="mt-m board-column">
       <div
@@ -41,10 +42,35 @@
 
 <script>
 import BaseButton from '../common/BaseButton';
+import TaskList from './TaskList';
 
 export default {
   name: 'task-board',
-  components: { BaseButton }
+  setup() {
+    const tasksTodo = [
+      {
+        id: 1,
+        title: 'Core UI',
+        description: 'Blablablablabla',
+        type: 'TASK',
+        priority: 'HIGH',
+        projectId: 1,
+        parentTaskId: null
+      },
+      {
+        id: 2,
+        title: 'Core UI',
+        description: 'Hahahahaha',
+        type: 'SUBTASK',
+        priority: 'HIGH',
+        projectId: 1,
+        parentTaskId: 1
+      }
+    ];
+
+    return { tasksTodo };
+  },
+  components: { BaseButton, TaskList }
 }
 </script>
 

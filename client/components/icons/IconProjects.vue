@@ -1,5 +1,5 @@
 <template>
-  <base-icon :width="36" :height="36">
+  <base-icon :width="width" :height="width">
     <g>
       <rect fill="none" :height="24" :width="24"></rect>
     </g>
@@ -18,6 +18,11 @@ import BaseIcon from '../common/BaseIcon';
 
 export default {
   name: 'icon-projects',
+  props: {
+    // TODO Resolve this in icons refactoring PR
+    width: { type: [Number, String], default: 36 },
+    height: { type: [Number, String], default: 36 }
+  },
   components: { BaseIcon }
 }
 </script>
