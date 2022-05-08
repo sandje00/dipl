@@ -88,8 +88,9 @@ export default {
 
       return Object.keys(data).length && api
         .update(projectId, data)
-        .then(({ data: { message } }) => {
-          console.log(message);
+        .then(async () => {
+          toggleEditMode();
+          await fetchProject(); // TODO Think of something better
         })
         .catch(err => {
           console.log(err);
