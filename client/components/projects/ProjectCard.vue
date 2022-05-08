@@ -1,5 +1,8 @@
 <template>
-  <div class="flex-v justify-center align-items-center project-card">
+  <div
+    @click="showDetails"
+    class="flex-v justify-center align-items-center project-card"
+  >
     <div class="img-placeholder"></div>
     <h2 class="mt-m project-card-title">
       {{ title }}
@@ -8,12 +11,25 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router';
+
 export default {
   name: 'project-card',
   props: {
+    id: { type: Number, required: true },
     title: { type: String, required: true }
+  },
+  setup(props) {
+    const router = useRouter();
+    const showDetails = () => {
+      router.push({
+        name: 'project-details',
+        params: { projectId: props.id }
+      });
+    };
+    return { showDetails };
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

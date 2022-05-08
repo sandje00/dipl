@@ -9,6 +9,7 @@ import Home from '@/components/Home';
 import Login from '@/components/auth/Login';
 import NewProject from '@/components/projects/NewProject';
 import Overview from '@/components/Overview';
+import ProjectDetails from '@/components/projects/ProjectDetails';
 import Projects from '@/components/projects';
 import Register from '@/components/Register';
 import ResetPassword from '@/components/auth/ResetPassword';
@@ -52,6 +53,13 @@ const routes = [
         path: 'new',
         name: 'new-project',
         component: NewProject,
+        meta: { requiresAuth: true }
+      },
+      {
+        path: 'details/:projectId',
+        name: 'project-details',
+        component: ProjectDetails,
+        props: true,
         meta: { requiresAuth: true }
       }
     ]
