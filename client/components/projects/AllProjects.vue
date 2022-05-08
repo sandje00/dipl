@@ -15,7 +15,7 @@
 <script>
 import { onBeforeMount, ref } from 'vue';
 import api from '@/api/projects';
-import ProjectCard from './Project';
+import ProjectCard from './ProjectCard';
 
 export default {
   name: 'all-projects',
