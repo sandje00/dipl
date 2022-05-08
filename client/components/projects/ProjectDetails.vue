@@ -31,6 +31,7 @@
     ></base-textarea>
     <div v-if="isEditMode" class="mt-m flex-h">
       <base-button
+        @click="submit"
         class="mr-m"
       >
         Submit
@@ -59,13 +60,14 @@ export default {
     projectId: { type: String, required: true }
   },
   setup(props) {
+    const projectId = parseInt(props.projectId);
     const project = ref({});
     const projectData = ref({});
     const fetchProject = async () => {
-      return api.getOne(parseInt(props.projectId))
+      return api.getOne(parseInt(projectId))
         .then(({ data }) => {
           project.value = data.project;
-          projectData.value = data.project;
+          projectData.value = { ...data.project };
         })
         .catch(err => console.log(err));
     };
@@ -76,11 +78,30 @@ export default {
       isEditMode.value = !isEditMode.value;
     };
 
+    const submit = async () => {
+      const data = {};
+      Object.keys(projectData.value).forEach(key => {
+        if (projectData.value[key] !== project.value[key]) {
+          data[key] = projectData.value[key];
+        }
+      });
+
+      return Object.keys(data).length && api
+        .update(projectId, data)
+        .then(({ data: { message } }) => {
+          console.log(message);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
+
     return {
       project,
       projectData,
       isEditMode,
-      toggleEditMode
+      toggleEditMode,
+      submit
     };
   },
   components: { BaseButton, BaseInput, BaseTextarea }
