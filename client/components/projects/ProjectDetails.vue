@@ -1,15 +1,48 @@
 <template>
-  <div class="pa-m container">
-    <base-button class="edit-button" neutral>
+  <div class="flex-v pa-m container">
+    <base-button
+      v-if="!isEditMode"
+      @click="toggleEditMode"
+      class="edit-button"
+      neutral
+    >
       Edit
     </base-button>
     <span class="mt-m label">Title:</span>
-    <h2 class="title">{{ project.title }}</h2>
+    <h2 v-if="!isEditMode" class="title">
+      {{ project.title }}
+    </h2>
+    <base-input
+      v-else
+      v-model="projectData.title"
+    ></base-input>
     <span class="mt-l label">Description:</span>
-    <span v-if="!project.description"></span>
-    <p v-else class="mt-m description">
-      {{ project.description }}
-    </p>
+    <div v-if="!isEditMode" class="mt-m">
+      <span v-if="!project.description">
+        There is no description provided
+      </span>
+      <p v-else class=" description">
+        {{ project.description }}
+      </p>
+    </div>
+    <base-textarea
+      v-else
+      v-model="projectData.description"
+    ></base-textarea>
+    <div v-if="isEditMode" class="mt-m flex-h">
+      <base-button
+        class="mr-m"
+      >
+        Submit
+      </base-button>
+      <base-button
+        @click="toggleEditMode"
+        class="mr-m"
+        neutral
+      >
+        Discard
+      </base-button>
+    </div>
   </div>
 </template>
 
@@ -17,6 +50,8 @@
 import { onBeforeMount, ref } from 'vue';
 import api from '@/api/projects';
 import BaseButton from '../common/BaseButton';
+import BaseInput from '../common/BaseInput';
+import BaseTextarea from '../common/BaseTextarea';
 
 export default {
   name: 'project-details',
@@ -25,17 +60,30 @@ export default {
   },
   setup(props) {
     const project = ref({});
+    const projectData = ref({});
     const fetchProject = async () => {
       return api.getOne(parseInt(props.projectId))
-        .then(({ data }) => { project.value = data.project; })
+        .then(({ data }) => {
+          project.value = data.project;
+          projectData.value = data.project;
+        })
         .catch(err => console.log(err));
     };
-
     onBeforeMount(() => fetchProject());
 
-    return { project };
+    const isEditMode = ref(false);
+    const toggleEditMode = () => {
+      isEditMode.value = !isEditMode.value;
+    };
+
+    return {
+      project,
+      projectData,
+      isEditMode,
+      toggleEditMode
+    };
   },
-  components: { BaseButton }
+  components: { BaseButton, BaseInput, BaseTextarea }
 };
 </script>
 
