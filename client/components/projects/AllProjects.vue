@@ -15,10 +15,10 @@
 <script>
 import { onBeforeMount, ref } from 'vue';
 import api from '@/api/projects';
-import ProjectCard from './Project';
+import ProjectCard from './ProjectCard';
 
 export default {
-  name: 'projects-list',
+  name: 'all-projects',
   setup() {
     const projects = ref([]);
     const fetchProjects = async () => {

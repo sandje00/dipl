@@ -1,13 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import AllProjects from '@/components/projects/AllProjects';
 import Auth from '@/components/auth';
 import Boards from '@/components/boards';
 import Docs from '@/components/Docs';
+import ForgotPassword from '@/components/auth/ForgotPassword';
 import { getCookieValue } from '@/utils/cookie';
 import Home from '@/components/Home';
 import Login from '@/components/auth/Login';
+import NewProject from '@/components/projects/NewProject';
 import Overview from '@/components/Overview';
+import ProjectDetails from '@/components/projects/ProjectDetails';
 import Projects from '@/components/projects';
 import Register from '@/components/Register';
+import ResetPassword from '@/components/auth/ResetPassword';
 import Verify from '@/components/auth/Verify';
 
 const routes = [
@@ -18,7 +23,14 @@ const routes = [
     component: Auth,
     children: [
       { path: 'verify/:token', component: Verify, props: true },
-      { path: 'login', name: 'login', component: Login }
+      { path: 'login', name: 'login', component: Login },
+      { path: 'forgot-password', name: 'forgot-password', component: ForgotPassword },
+      {
+        path: 'reset/:token',
+        name: 'reset-password',
+        component: ResetPassword,
+        props: true
+      }
     ]
   },
   {
@@ -29,9 +41,28 @@ const routes = [
   },
   {
     path: '/projects',
-    name: 'projects',
     component: Projects,
-    meta: { requiresAuth: true }
+    children: [
+      {
+        path: 'all',
+        name: 'all-projects',
+        component: AllProjects,
+        meta: { requiresAuth: true }
+      },
+      {
+        path: 'new',
+        name: 'new-project',
+        component: NewProject,
+        meta: { requiresAuth: true }
+      },
+      {
+        path: 'details/:projectId',
+        name: 'project-details',
+        component: ProjectDetails,
+        props: true,
+        meta: { requiresAuth: true }
+      }
+    ]
   },
   {
     path: '/boards',

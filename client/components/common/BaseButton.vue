@@ -43,6 +43,7 @@ export default {
 .neutral {
   background-color: var(--color-background-neutral);
   color: var(--color-text-secondary);
+  font-weight: $font-weight-bold; // TODO This might be changed once feature/boards-ui is merged
 }
 
 .rounded {

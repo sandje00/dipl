@@ -1,12 +1,15 @@
 'use strict';
 
+const {
+  sendResetTokenEmail,
+  sendVerificationEmail
+} = require('../shared/mail');
 const Audience = require('../shared/auth/audience');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { logger } = require('../shared/logger');
 const { Model } = require('sequelize');
 const pick = require('lodash/pick');
-const { sendVerificationEmail } = require('../shared/mail');
 const { auth: { saltRounds, secret } } = require('../config');
 
 class User extends Model {
@@ -62,6 +65,11 @@ class User extends Model {
     return {
       beforeCreate(user) {
         return user._hashPassword();
+      },
+      beforeUpdate(user) {
+        return user.changed('password')
+          ? user._hashPassword()
+          : Promise.resolve(user);
       }
     };
   }
@@ -106,6 +114,18 @@ class User extends Model {
     return sendVerificationEmail(token, this.email)
       .catch(err => {
         logger.error('An error has occured sending verification email:', err.message);
+      });
+  }
+
+  async sendResetToken() {
+    const token = this.createToken({
+      audience: Audience.Scope.Setup,
+      expiresIn: '5 days'
+    });
+
+    return sendResetTokenEmail(token, this.email)
+      .catch(err => {
+        logger.error('An error has occured sending reset token email:', err.message);
       });
   }
 }

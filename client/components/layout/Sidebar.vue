@@ -4,7 +4,6 @@
     <nav class="flex-v align-items-center mt-xl">
       <router-link
         :to="{ name: 'overview' }"
-        :class="{ 'active': pathName === 'overview' }"
         class="navlink"
       >
         <div class="flex-v align-items-center pa-m">
@@ -13,8 +12,7 @@
         </div>
       </router-link>
       <router-link
-        :to="{ name: 'projects' }"
-        :class="{ 'active': pathName === 'projects' }"
+        :to="{ name: 'all-projects' }"
         class="navlink"
       >
         <div class="flex-v align-items-center pa-m">
@@ -24,7 +22,6 @@
       </router-link>
       <router-link
         :to="{ name: 'boards' }"
-        :class="{ 'active': pathName === 'boards' }"
         class="navlink"
       >
         <div class="flex-v align-items-center pa-m">
@@ -34,7 +31,6 @@
       </router-link>
       <router-link
         :to="{ name: 'docs' }"
-        :class="{ 'active': pathName === 'docs' }"
         class="navlink"
       >
         <div class="flex-v align-items-center pa-m">
@@ -48,20 +44,13 @@
 
 <script>
 import AppLogo from '../common/Logo';
-import { computed } from 'vue';
 import IconBoards from '../icons/IconBoards';
 import IconDocs from '../icons/IconDocs';
 import IconHome from '../icons/IconHome';
 import IconProjects from '../icons/IconProjects';
-import { useRoute } from 'vue-router';
 
 export default {
   name: 'app-sidebar',
-  setup() {
-    const pathName = computed(() => useRoute().name);
-
-    return { pathName };
-  },
   components: {
     AppLogo,
     IconBoards,
@@ -90,7 +79,8 @@ export default {
     font-size: $font-size-small;
     font-weight: $font-weight-bold;
 
-    &:hover, &.active {
+    &:hover,
+    &.router-link-exact-active {
       color: var(--color-primary);
 
       svg {
@@ -98,7 +88,7 @@ export default {
       }
     }
 
-    &.active {
+    &.router-link-exact-active {
       max-width: calc(var(--measure-sidebar-width) * 0.85);
       background-color: var(--color-primary-light);
       border-radius: 10px;
