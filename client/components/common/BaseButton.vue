@@ -1,12 +1,22 @@
 <template>
-  <button class="px-xl py-s button">
+  <button
+    :class="[
+      neutral ? 'neutral' : 'primary',
+      rounded ? 'px-m rounded' : 'px-xl'
+    ]"
+    class="py-s button"
+  >
     <slot></slot>
   </button>
 </template>
 
 <script>
 export default {
-  name: 'base-button'
+  name: 'base-button',
+  props: {
+    neutral: { type: Boolean, default: false },
+    rounded: { type: Boolean, default: false }
+  }
 }
 </script>
 
@@ -18,12 +28,25 @@ export default {
   background: none;
   border: none;
   cursor: pointer;
-  background-color: var(--color-primary);
-  color: var(--color-white);
   border-radius: 5px;
 
   &:focus {
     outline: none;
   }
+}
+
+.primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.neutral {
+  background-color: var(--color-background-neutral);
+  color: var(--color-text-secondary);
+  font-weight: $font-weight-bold; // TODO This might be changed once feature/boards-ui is merged
+}
+
+.rounded {
+  border-radius: 50%;
 }
 </style>
