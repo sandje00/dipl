@@ -15,9 +15,14 @@ body {
 
 a {
   text-decoration: none;
+  display: inline-block;
 }
 
 button {
   background: none;
   border: none;
+}
+
+span {
+  display: inline-block;
 }

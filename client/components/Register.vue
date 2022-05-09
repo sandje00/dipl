@@ -100,7 +100,6 @@ export default {
 @import '../assets/stylesheets/base/_typography.scss';
 
 .success-message {
-  display: inline-block;
   color: var(--color-text-primary);
   font-size: $font-size-large;
 }

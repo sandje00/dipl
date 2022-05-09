@@ -21,7 +21,7 @@
     </base-button>
     <router-link
       :to="{ name: 'forgot-password' }"
-      class="link pt-xl align-self-center">
+      class="pt-xl align-self-center">
       Forgot password?
     </router-link>
   </form>
@@ -64,10 +64,3 @@ export default {
   components: { BaseButton, BaseInput }
 }
 </script>
-
-<style lang="scss" scoped>
-.link {
-  // TODO Extract into separate .scss file
-  display: inline-block;
-}
-</style>
