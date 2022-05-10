@@ -31,7 +31,6 @@ export default {
   cursor: pointer;
 
   .username {
-    display: inline-block;
     font-weight: $font-weight-bold;
     font-size: $font-size-large;
 

@@ -8,7 +8,7 @@
     >
       Edit
     </base-button>
-    <span class="mt-m label">Title:</span>
+    <span class="mt-m">Title:</span>
     <h2 v-if="!isEditMode" class="title">
       {{ project.title }}
     </h2>
@@ -16,7 +16,7 @@
       v-else
       v-model="projectData.title"
     ></base-input>
-    <span class="mt-l label">Description:</span>
+    <span class="mt-l">Description:</span>
     <div v-if="!isEditMode" class="mt-m">
       <span v-if="!project.description">
         There is no description provided
@@ -119,11 +119,6 @@ export default {
     position: absolute;
     top: 1rem;
     right: 1rem;
-  }
-
-  .label {
-    // TODO Extract to separate .scss file
-    display: inline-block;
   }
 
   .description {
