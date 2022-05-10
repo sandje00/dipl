@@ -53,18 +53,27 @@ export default {
         title: 'Core UI',
         description: 'Blablablablabla',
         type: 'TASK',
-        priority: 'HIGH',
-        projectId: 1,
-        parentTaskId: null
+        priority: 'MAJOR',
+        project: {
+          id: 1,
+          title: 'Cool Project'
+        },
+        parentTask: {}
       },
       {
         id: 2,
-        title: 'Core UI',
+        title: 'Header',
         description: 'Hahahahaha',
         type: 'SUBTASK',
-        priority: 'HIGH',
-        projectId: 1,
-        parentTaskId: 1
+        priority: 'MAJOR',
+        project: {
+          id: 1,
+          title: 'Cool Project'
+        },
+        parentTask: {
+          id: 1,
+          title: 'Core UI'
+        }
       }
     ];
 

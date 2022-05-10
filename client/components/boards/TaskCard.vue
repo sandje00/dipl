@@ -6,22 +6,22 @@
     </div>
     <p>{{ description }}</p>
     <span class="pt-m">{{ priority }}</span>
-    <div class="flex-h justify-end">
+    <div class="mt-l">
       <div
-        v-if="projectId"
-        class="flex-h justify-center align-items-center"
+        v-if="project.id"
+        class="flex-h align-items-center mt-xs"
       >
-        <icon-projects :width="24" :height="24">
+        <icon-projects class="mr-xs" :width="24" :height="24">
         </icon-projects>
-        <span>{{ projectId }}</span>
+        <span>{{ project.title }}</span>
       </div>
       <div
-        v-if="parentTaskId"
-        class="flex-h justify-center align-items-center"
+        v-if="parentTask.id"
+        class="flex-h align-items-center mt-xs"
       >
-        <icon-task :width="24" :height="24">
+        <icon-task class="mr-xs">
         </icon-task>
-        <span>{{ parentTaskId }}</span>
+        <span>{{ parentTask.title }}</span>
       </div>
     </div>
   </div>
@@ -56,8 +56,8 @@ export default {
       default: status.TODO,
       validator: val => values(status).includes(val)
     }, */,
-    projectId: { type: [Number, null] },
-    parentTaskId: { type: [Number, null] }
+    project: { type: Object, default: () => ({}) },
+    parentTask: { type: Object, default: () => ({}) }
   },
   components: { IconProjects, IconTask }
 };
@@ -72,11 +72,6 @@ export default {
 
   &-title {
     color: var(--color-text-primary);
-  }
-
-  span {
-    // TODO Extract to a different .scss file
-    display: inline-block;
   }
 }
 </style>
