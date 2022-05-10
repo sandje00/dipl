@@ -5,7 +5,9 @@
       <span>{{ type }}</span>
     </div>
     <p>{{ description }}</p>
-    <span class="pt-m">{{ priority }}</span>
+    <span :class="[priority]" class="pt-m priority">
+      {{ priority }}
+    </span>
     <div class="mt-l">
       <div
         v-if="project.id"
@@ -64,6 +66,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../assets/stylesheets/base/_typography.scss';
+
 .task-card {
   width: 90%;
   background-color: var(--color-background-primary);
@@ -72,6 +76,22 @@ export default {
 
   &-title {
     color: var(--color-text-primary);
+  }
+
+  .priority {
+    font-weight: $font-weight-bold;
+
+    &.MINOR {
+      color: var(--color-minor);
+    }
+
+    &.MEDIUM {
+      color: var(--color-medium);
+    }
+
+    &.MAJOR {
+      color: var(--color-major);
+    }
   }
 }
 </style>
