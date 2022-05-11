@@ -73,6 +73,7 @@ export default {
   background-color: var(--color-background-primary);
   border: 1px solid var(--color-border);
   border-radius: 10px;
+  cursor: move;
 
   &-title {
     color: var(--color-text-primary);

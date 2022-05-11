@@ -12,7 +12,7 @@
       @drop="onDrop($event, columnChange)"
       @dragover.prevent
       @dragenter.prevent
-      class="flex-v mt-l"
+      class="flex-v mt-l drop-area"
     >
       <task-card
         v-for="task in tasks"
@@ -59,6 +59,10 @@ export default {
 
   &-title {
     text-transform: uppercase;
+  }
+
+  .drop-area {
+    padding-bottom: 50vh;
   }
 }
 </style>
