@@ -1,14 +1,17 @@
 <template>
   <div class="flex-h px-xl py-m">
     <board-column
+      @column-change="handleColumnChange"
       column-title="to do"
       :tasks="tasksToDo"
     ></board-column>
     <board-column
+      @column-change="handleColumnChange"
       column-title="in progress"
       :tasks="tasksInProgress"
     ></board-column>
     <board-column
+      @column-change="handleColumnChange"
       column-title="done"
       :tasks="tasksDone"
     ></board-column>
@@ -19,11 +22,13 @@
 import BoardColumn from './BoardColumn';
 import { computed } from 'vue';
 import status from '../../../common/status';
+import { ref } from 'vue';
 
 export default {
   name: 'task-board',
   setup() {
-    const tasks = [
+    const tasks = ref([]);
+    tasks.value = [
       {
         id: 1,
         title: 'Core UI',
@@ -67,15 +72,26 @@ export default {
         parentTask: {}
       }
     ];
-    const tasksToDo = computed(() => tasks.filter(it => it.status === status.TO_DO));
-    const tasksInProgress = computed(() => tasks.filter(it => it.status === status.IN_PROGRESS));
-    const tasksDone = computed(() => tasks.filter(it => it.status === status.DONE));
+    const tasksToDo = computed(() => tasks.value.filter(it => it.status === status.TO_DO));
+    const tasksInProgress = computed(() => tasks.value.filter(it => it.status === status.IN_PROGRESS));
+    const tasksDone = computed(() => tasks.value.filter(it => it.status === status.DONE));
 
+    const handleColumnChange = task => {
+      tasks.value = tasks.value.map(it => {
+        if (it.id === task.id) it.status = task.status;
+        return it;
+      });
+    };
 
-    return { tasksToDo, tasksInProgress, tasksDone };
+    return {
+      tasksToDo,
+      tasksInProgress,
+      tasksDone,
+      handleColumnChange
+    };
   },
   components: { BoardColumn }
-}
+};
 </script>
 
 <style lang="scss" scoped>

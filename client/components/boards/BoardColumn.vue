@@ -8,13 +8,29 @@
         <h2>+</h2>
       </base-button>
     </div>
-    <task-list :tasks="tasks"></task-list>
+    <div
+      @drop="onDrop($event, columnChange)"
+      @dragover.prevent
+      @dragenter.prevent
+      class="flex-v mt-l"
+    >
+      <task-card
+        v-for="task in tasks"
+        :key="task.id"
+        v-bind="task"
+        draggable
+        @dragstart="startDrag($event, task.id)"
+      ></task-card>
+    </div>
   </div>
 </template>
 
 <script>
 import BaseButton from '../common/BaseButton';
-import TaskList from './TaskList';
+import TaskCard from './TaskCard';
+import useDragAndDrop from '@/composables/useDragAndDrop';
+
+const toUpperSnakeCase = str => str.toUpperCase().split(' ').join('_');
 
 export default {
   name: 'board-column',
@@ -22,17 +38,24 @@ export default {
     columnTitle: { type: String, required: true },
     tasks: { type: Array, default: () => ([]) }
   },
-  components: { BaseButton, TaskList }
-}
+  setup(props, { emit }) {
+    const { startDrag, onDrop } = useDragAndDrop();
+    const columnChange = id => emit('column-change', {
+      id,
+      status: toUpperSnakeCase(props.columnTitle)
+    });
+
+    return { startDrag, onDrop, columnChange };
+  },
+  components: { BaseButton, TaskCard }
+};
 </script>
 
 <style lang="scss" scoped>
-$column-padding-right: 5rem;
-
 .board-column {
   width: 33.33%;
   height: 100%;
-  padding-right: $column-padding-right;
+  padding-right: 5rem;
 
   &-title {
     text-transform: uppercase;
