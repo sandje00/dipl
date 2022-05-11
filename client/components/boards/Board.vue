@@ -1,59 +1,36 @@
 <template>
-  <div class="flex-h px-xl py-m board">
-    <div class="mt-m board-column">
-      <div
-        class="flex-h justify-space-between align-items-center"
-      >
-        <h2 class="board-column-title">
-          to do
-        </h2>
-        <base-button neutral rounded>
-          <h2>+</h2>
-        </base-button>
-      </div>
-      <task-list :tasks="tasksTodo"></task-list>
-    </div>
-    <div class="mt-m board-column">
-      <div
-        class="flex-h justify-space-between align-items-center"
-      >
-        <h2 class="board-column-title">
-          in progress
-        </h2>
-        <base-button neutral rounded>
-          <h2>+</h2>
-        </base-button>
-      </div>
-    </div>
-    <div class="mt-m board-column">
-      <div
-        class="flex-h justify-space-between align-items-center"
-      >
-        <h2 class="board-column-title">
-          done
-        </h2>
-        <base-button neutral rounded>
-          <h2>+</h2>
-        </base-button>
-      </div>
-    </div>
+  <div class="flex-h px-xl py-m">
+    <board-column
+      column-title="to do"
+      :tasks="tasksToDo"
+    ></board-column>
+    <board-column
+      column-title="in progress"
+      :tasks="tasksInProgress"
+    ></board-column>
+    <board-column
+      column-title="done"
+      :tasks="tasksDone"
+    ></board-column>
   </div>
 </template>
 
 <script>
-import BaseButton from '../common/BaseButton';
-import TaskList from './TaskList';
+import BoardColumn from './BoardColumn';
+import { computed } from 'vue';
+import status from '../../../common/status';
 
 export default {
   name: 'task-board',
   setup() {
-    const tasksTodo = [
+    const tasks = [
       {
         id: 1,
         title: 'Core UI',
         description: 'Blablablablabla',
         type: 'TASK',
         priority: 'MAJOR',
+        status: 'TO_DO',
         project: {
           id: 1,
           title: 'Cool Project'
@@ -66,6 +43,7 @@ export default {
         description: 'Hahahahaha',
         type: 'SUBTASK',
         priority: 'MAJOR',
+        status: 'IN_PROGRESS',
         project: {
           id: 1,
           title: 'Cool Project'
@@ -74,25 +52,32 @@ export default {
           id: 1,
           title: 'Core UI'
         }
+      },
+      {
+        id: 3,
+        title: 'Project Setup',
+        description: 'Hahahahaha',
+        type: 'TASK',
+        priority: 'MAJOR',
+        status: 'DONE',
+        project: {
+          id: 1,
+          title: 'Cool Project'
+        },
+        parentTask: {}
       }
     ];
+    const tasksToDo = computed(() => tasks.filter(it => it.status === status.TO_DO));
+    const tasksInProgress = computed(() => tasks.filter(it => it.status === status.IN_PROGRESS));
+    const tasksDone = computed(() => tasks.filter(it => it.status === status.DONE));
 
-    return { tasksTodo };
+
+    return { tasksToDo, tasksInProgress, tasksDone };
   },
-  components: { BaseButton, TaskList }
+  components: { BoardColumn }
 }
 </script>
 
 <style lang="scss" scoped>
-.board {
-  &-column {
-    width: 33.33%;
-    height: 100%;
-    padding-right: 5rem; // Exception
 
-    &-title {
-      text-transform: uppercase;
-    }
-  }
-}
 </style>
