@@ -98,9 +98,10 @@ async function resetPassword({ body: { password }, user }, res) {
   });
 }
 
-async function getAll(req, res) {
-  const users = await User.findAll();
-  return res.status(OK).json({ users });
+function getOne({ user }, res) {
+  return res.status(OK).json({
+    user: pick(user, ['id', 'username', 'imgUrl', 'active'])
+  });
 }
 
 module.exports = {
@@ -110,5 +111,5 @@ module.exports = {
   logout,
   forgotPassword,
   resetPassword,
-  getAll
+  getOne
 };

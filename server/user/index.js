@@ -12,8 +12,7 @@ router
   .get('/verify/:token', verifyJwt, ctrl.verify)
   .post('/reset-password', verifyJwt, ctrl.resetPassword)
   .use(authenticate)
-  .post('/logout', ctrl.logout)
-  // Test route
-  .get('/', ctrl.getAll);
+  .get('/', ctrl.getOne)
+  .post('/logout', ctrl.logout);
 
 module.exports = { path: '/users', router };
