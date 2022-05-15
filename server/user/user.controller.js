@@ -38,9 +38,7 @@ async function register({ body }, res) {
   return res.status(CREATED).json({ message: msg.SUCCESS_REGISTER });
 }
 
-async function verify({ id }, res) {
-  const user = await User.findByPk(id);
-  if (!user) throw new HttpError(NOT_FOUND, msg.USER_NOT_FOUND);
+async function verify({ user }, res) {
   if (user.active) throw new HttpError(CONFLICT, msg.ALREADY_VERIFIED);
   user.active = true;
   await user.save();
@@ -92,9 +90,7 @@ async function forgotPassword({ body }, res) {
   });
 }
 
-async function resetPassword({ body: { password }, id }, res) {
-  const user = await User.findByPk(id);
-  if (!user) throw new HttpError(NOT_FOUND, msg.USER_NOT_FOUND);
+async function resetPassword({ body: { password }, user }, res) {
   user.password = password;
   await user.save();
   return res.status(OK).json({
@@ -102,9 +98,10 @@ async function resetPassword({ body: { password }, id }, res) {
   });
 }
 
-async function getAll(req, res) {
-  const users = await User.findAll();
-  return res.status(OK).json({ users });
+function getOne({ user }, res) {
+  return res.status(OK).json({
+    user: pick(user, ['id', 'username', 'imgUrl', 'active'])
+  });
 }
 
 module.exports = {
@@ -114,5 +111,5 @@ module.exports = {
   logout,
   forgotPassword,
   resetPassword,
-  getAll
+  getOne
 };

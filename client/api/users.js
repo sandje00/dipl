@@ -1,11 +1,19 @@
 import client from './client';
 
 const url = {
-  register: '/users/register'
+  register: '/users/register',
+  getOne: '/users/'
 };
 
 function register(data) {
   return client.post(url.register, data);
 }
 
-export default { register }
+function getOne() {
+  return client.get(url.getOne);
+}
+
+export default {
+  register,
+  getOne
+};
