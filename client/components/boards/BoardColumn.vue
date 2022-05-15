@@ -18,8 +18,6 @@
         v-for="task in tasks"
         :key="task.id"
         v-bind="task"
-        :draggable="isDraggable"
-        @click="isDraggable = !isDraggable"
         @dragstart="startDrag($event, task.id)"
       ></task-card>
     </div>
@@ -28,7 +26,6 @@
 
 <script>
 import BaseButton from '../common/BaseButton';
-import { ref } from 'vue';
 import TaskCard from './TaskCard';
 import useDragAndDrop from '@/composables/useDragAndDrop';
 
@@ -41,7 +38,6 @@ export default {
     tasks: { type: Array, default: () => ([]) }
   },
   setup(props, { emit }) {
-    const isDraggable = ref(false);
     const { startDrag, onDrop } = useDragAndDrop();
     const columnChange = id => emit('column-change', {
       id,
@@ -49,7 +45,6 @@ export default {
     });
 
     return {
-      isDraggable,
       startDrag,
       onDrop,
       columnChange,

@@ -1,5 +1,8 @@
 <template>
-  <div class="mt-l pa-m task-card">
+  <div
+    :draggable="isDraggable"
+    @click="isDraggable = !isDraggable"
+    class="mt-l pa-m task-card">
     <div class="flex-h justify-space-between align-items-end">
       <h3 class="task-card-title">{{ title }}</h3>
       <span>{{ type }}</span>
@@ -34,6 +37,7 @@ import category from '../../../common/type';
 import IconProjects from '../icons/IconProjects';
 import IconTask from '../icons/IconTask';
 import priority from '../../../common/priority';
+import { ref } from 'vue';
 // import status from '../../../common/status';
 import values from 'lodash/values';
 
@@ -60,6 +64,10 @@ export default {
     }, */,
     project: { type: Object, default: () => ({}) },
     parentTask: { type: Object, default: () => ({}) }
+  },
+  setup() {
+    const isDraggable = ref(false);
+    return { isDraggable };
   },
   components: { IconProjects, IconTask }
 };
