@@ -11,6 +11,7 @@ router.param('taskId', getTask);
 
 router
   .use(authenticate)
+  .get('/', ctrl.getAll)
   .post('/', ctrl.create)
   .get('/:taskId', ctrl.getOne)
   .patch('/:taskId', ctrl.update);
