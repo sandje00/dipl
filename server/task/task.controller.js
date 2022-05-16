@@ -12,28 +12,22 @@ const msg = {
 };
 
 async function getAll({ user: { id } }, res) {
-  try {
-    const tasks = await Task.findAll({
-      attributes: {
-        exclude: [ 'userId', 'projectId', 'parentTaskId' ]
-      },
-      where: { userId: id },
-      include: [{
-        model: Project,
-        as: 'project',
-        attributes: [ 'id', 'title' ]
-      }, {
-        model: Task,
-        as: 'parent',
-        attributes: [ 'id', 'title' ]
-      }]
-    });
-    return res.status(OK).json({ tasks });
-  }
-  catch (err) {
-    console.error(err);
-    throw err;
-  }
+  const tasks = await Task.findAll({
+    attributes: {
+      exclude: [ 'userId', 'projectId', 'parentTaskId' ]
+    },
+    where: { userId: id },
+    include: [{
+      model: Project,
+      as: 'project',
+      attributes: [ 'id', 'title' ]
+    }, {
+      model: Task,
+      as: 'parent',
+      attributes: [ 'id', 'title' ]
+    }]
+  });
+  return res.status(OK).json({ tasks });
 }
 
 async function create(req, res) {
