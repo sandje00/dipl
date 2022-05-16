@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import AllProjects from '@/components/projects/AllProjects';
 import Auth from '@/components/auth';
-import Boards from '@/components/Boards';
+import Boards from '@/components/boards';
 import Docs from '@/components/Docs';
 import ForgotPassword from '@/components/auth/ForgotPassword';
 import { getCookieValue } from '@/utils/cookie';
