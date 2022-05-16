@@ -38,7 +38,6 @@ import IconProjects from '../icons/IconProjects';
 import IconTask from '../icons/IconTask';
 import priority from '../../../common/priority';
 import { ref } from 'vue';
-// import status from '../../../common/status';
 import values from 'lodash/values';
 
 export default {
@@ -56,12 +55,7 @@ export default {
       type: String,
       default: priority.MEDIUM,
       validator: val => values(priority).includes(val)
-    }/* ,
-    status: {
-      type: String,
-      default: status.TODO,
-      validator: val => values(status).includes(val)
-    }, */,
+    },
     project: { type: Object, default: () => ({}) },
     parentTask: { type: Object, default: () => ({}) }
   },

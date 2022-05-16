@@ -24,9 +24,21 @@ import { computed } from 'vue';
 import status from '../../../common/status';
 import { ref } from 'vue';
 
+const filterTasks = (tasks, status, projectTitle) => {
+  return tasks
+    .filter(
+      projectTitle === 'All Projects'
+      ? it => it.status === status
+      : it => it.project.title === projectTitle && it.status === status
+    );
+};
+
 export default {
   name: 'task-board',
-  setup() {
+  props: {
+    currentProject: { type: String, default: 'All Projects' }
+  },
+  setup(props) {
     const tasks = ref([]);
     tasks.value = [
       {
@@ -70,11 +82,24 @@ export default {
           title: 'Cool Project'
         },
         parentTask: {}
+      },
+      {
+        id: 4,
+        title: 'First task',
+        description: 'Hahahahaha',
+        type: 'TASK',
+        priority: 'MAJOR',
+        status: 'TO_DO',
+        project: {
+          id: 2,
+          title: 'Awesome Project'
+        },
+        parentTask: {}
       }
     ];
-    const tasksToDo = computed(() => tasks.value.filter(it => it.status === status.TO_DO));
-    const tasksInProgress = computed(() => tasks.value.filter(it => it.status === status.IN_PROGRESS));
-    const tasksDone = computed(() => tasks.value.filter(it => it.status === status.DONE));
+    const tasksToDo = computed(() => filterTasks(tasks.value, status.TO_DO, props.currentProject));
+    const tasksInProgress = computed(() => filterTasks(tasks.value, status.IN_PROGRESS, props.currentProject));
+    const tasksDone = computed(() => filterTasks(tasks.value, status.DONE, props.currentProject));
 
     const handleColumnChange = task => {
       tasks.value = tasks.value.map(it => {
@@ -93,7 +118,3 @@ export default {
   components: { BoardColumn }
 };
 </script>
-
-<style lang="scss" scoped>
-
-</style>
