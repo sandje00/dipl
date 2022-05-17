@@ -2,6 +2,7 @@ import client from './client';
 
 const url = {
   getAll: '/projects',
+  getAllTitles: '/projects/titles',
   create: '/projects',
   getOne: id => `/projects/${id}`,
   update: id => `/projects/${id}`
@@ -9,6 +10,10 @@ const url = {
 
 function getAll() {
   return client.get(url.getAll);
+}
+
+function getAllTitles() {
+  return client.get(url.getAllTitles);
 }
 
 function create(project) {
@@ -25,6 +30,7 @@ function update(projectId, data) {
 
 export default {
   getAll,
+  getAllTitles,
   create,
   getOne,
   update

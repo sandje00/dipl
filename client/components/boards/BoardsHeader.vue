@@ -9,17 +9,25 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed, ref, onBeforeMount } from 'vue';
+import api from '@/api/projects';
 import BaseSelect from '../common/BaseSelect';
 
 export default {
   name: 'boards-header',
   emits: [ 'project-change' ],
   setup() {
-    const projects = [ 'Cool Project', 'Awesome Project' ];
+    const projects = ref([]);
+    onBeforeMount(() => {
+      return api
+        .getAllTitles()
+        .then(({ data }) => { projects.value = data.projects; })
+        .catch(err => console.log(err));
+    });
+
     const selectOptions = computed(() => ([
       'All Projects',
-      ...projects
+      ...projects.value
     ]));
     const currentProject = ref(selectOptions.value[0]);
 
