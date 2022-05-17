@@ -1,13 +1,5 @@
 <template>
   <div class="flex-v pa-m container">
-    <base-button
-      v-if="!isEditMode"
-      @click="toggleEditMode"
-      class="edit-button"
-      neutral
-    >
-      Edit
-    </base-button>
     <span class="mt-m">Title:</span>
     <h2 v-if="!isEditMode" class="title">
       {{ project.title }}
@@ -30,26 +22,35 @@
       v-model="projectData.description"
     ></base-textarea>
     <div v-if="isEditMode" class="mt-m flex-h">
-      <base-button
-        @click="submit"
-        class="mr-m"
-      >
+      <base-button @click="submit" class="mr-m">
         Submit
       </base-button>
-      <base-button
-        @click="toggleEditMode"
-        class="mr-m"
-        neutral
-      >
+      <base-button @click="toggleEditMode" class="mr-m" neutral>
         Discard
       </base-button>
     </div>
+    <div
+      v-if="!isEditMode"
+      class="flex-h justify-center align-items-center controls"
+    >
+      <base-button @click="toggleEditMode" class="ml-m" neutral>
+        Edit
+      </base-button>
+      <base-button @click="toggleModal" class="ml-m" neutral>
+        Connect to repo
+      </base-button>
+    </div>
+    <authorize-modal
+      v-if="isModalOpen"
+      @close-modal="toggleModal"
+    ></authorize-modal>
   </div>
 </template>
 
 <script>
 import { onBeforeMount, ref } from 'vue';
 import api from '@/api/projects';
+import AuthorizeModal from '../AuthorizeModal';
 import BaseButton from '../common/BaseButton';
 import BaseInput from '../common/BaseInput';
 import BaseTextarea from '../common/BaseTextarea';
@@ -97,15 +98,27 @@ export default {
         });
     };
 
+    const isModalOpen = ref(false);
+    const toggleModal = () => {
+      isModalOpen.value = !isModalOpen.value;
+    };
+
     return {
       project,
       projectData,
       isEditMode,
       toggleEditMode,
-      submit
+      submit,
+      isModalOpen,
+      toggleModal
     };
   },
-  components: { BaseButton, BaseInput, BaseTextarea }
+  components: {
+    AuthorizeModal,
+    BaseButton,
+    BaseInput,
+    BaseTextarea
+  }
 };
 </script>
 
@@ -115,7 +128,7 @@ export default {
 .container {
   position: relative;
 
-  .edit-button {
+  .controls {
     position: absolute;
     top: 1rem;
     right: 1rem;
