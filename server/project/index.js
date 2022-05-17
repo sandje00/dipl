@@ -12,6 +12,7 @@ router.param('projectId', getProject);
 router
   .use(authenticate)
   .get('/', ctrl.getAll)
+  .get('/titles', ctrl.getAllTitles)
   .post('/', ctrl.create)
   .get('/:projectId', ctrl.getOne)
   .patch('/:projectId', ctrl.update);
@@ -24,5 +25,5 @@ async function getProject(req, _, next, projectId) {
       if (!project) throw new HttpError(NOT_FOUND, { message: 'Project not found.' });
       req.project = project;
       next();
-    })
+    });
 }
