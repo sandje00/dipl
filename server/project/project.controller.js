@@ -46,9 +46,24 @@ async function update({ body, project }, res) {
   return res.status(OK).json({ message: msg.SUCCESS_UPDATE_PROJECT });
 }
 
+async function getAllTitles({ user: { id } }, res) {
+  const projects = await Project.findAll({
+    attributes: [ 'title' ],
+    where: { userId: id }
+  });
+  return res.status(OK).json({
+    projects: keyValuesToArray(projects, 'title')
+  });
+}
+
 module.exports = {
   getAll,
   create,
   getOne,
-  update
+  update,
+  getAllTitles
 };
+
+function keyValuesToArray(objArr, key) {
+  return objArr.map(it => it[key]);
+}

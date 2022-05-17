@@ -1,7 +1,8 @@
 'use strict';
 
-const { BAD_REQUEST, CREATED, OK } = require('../shared/errors/status')
+const { BAD_REQUEST, CREATED, OK } = require('../shared/errors/status');
 const HttpError = require('../shared/errors/httpError');
+const { Project } = require('../shared/database');
 const Task = require('./task.model');
 const { UniqueConstraintError } = require('sequelize');
 
@@ -9,6 +10,25 @@ const msg = {
   SUCCESS_ADD_TASK: 'You have added new task successfully.',
   SUCCESS_UPDATE_TASK: 'You have updated task successfully.'
 };
+
+async function getAll({ user: { id } }, res) {
+  const tasks = await Task.findAll({
+    attributes: {
+      exclude: [ 'userId', 'projectId', 'parentTaskId' ]
+    },
+    where: { userId: id },
+    include: [{
+      model: Project,
+      as: 'project',
+      attributes: [ 'id', 'title' ]
+    }, {
+      model: Task,
+      as: 'parent',
+      attributes: [ 'id', 'title' ]
+    }]
+  });
+  return res.status(OK).json({ tasks });
+}
 
 async function create(req, res) {
   const newTask = { ...req.body, userId: req.user.id };
@@ -41,6 +61,7 @@ async function update({ body, task }, res) {
 }
 
 module.exports = {
+  getAll,
   create,
   getOne,
   update

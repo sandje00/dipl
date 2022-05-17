@@ -19,10 +19,10 @@
 </template>
 
 <script>
+import { computed, ref, onBeforeMount } from 'vue';
+import api from '@/api/tasks';
 import BoardColumn from './BoardColumn';
-import { computed } from 'vue';
 import status from '../../../common/status';
-import { ref } from 'vue';
 
 const filterTasks = (tasks, status, projectTitle) => {
   return tasks
@@ -40,63 +40,15 @@ export default {
   },
   setup(props) {
     const tasks = ref([]);
-    tasks.value = [
-      {
-        id: 1,
-        title: 'Core UI',
-        description: 'Blablablablabla',
-        type: 'TASK',
-        priority: 'MAJOR',
-        status: 'TO_DO',
-        project: {
-          id: 1,
-          title: 'Cool Project'
-        },
-        parentTask: {}
-      },
-      {
-        id: 2,
-        title: 'Header',
-        description: 'Hahahahaha',
-        type: 'SUBTASK',
-        priority: 'MAJOR',
-        status: 'IN_PROGRESS',
-        project: {
-          id: 1,
-          title: 'Cool Project'
-        },
-        parentTask: {
-          id: 1,
-          title: 'Core UI'
-        }
-      },
-      {
-        id: 3,
-        title: 'Project Setup',
-        description: 'Hahahahaha',
-        type: 'TASK',
-        priority: 'MAJOR',
-        status: 'DONE',
-        project: {
-          id: 1,
-          title: 'Cool Project'
-        },
-        parentTask: {}
-      },
-      {
-        id: 4,
-        title: 'First task',
-        description: 'Hahahahaha',
-        type: 'TASK',
-        priority: 'MAJOR',
-        status: 'TO_DO',
-        project: {
-          id: 2,
-          title: 'Awesome Project'
-        },
-        parentTask: {}
-      }
-    ];
+
+    const fetchTasks = async () => {
+      return api
+        .getAll()
+        .then(({ data }) => { tasks.value = data.tasks; })
+        .catch(err => console.log(err));
+    }
+    onBeforeMount(() => fetchTasks());
+
     const tasksToDo = computed(() => filterTasks(tasks.value, status.TO_DO, props.currentProject));
     const tasksInProgress = computed(() => filterTasks(tasks.value, status.IN_PROGRESS, props.currentProject));
     const tasksDone = computed(() => filterTasks(tasks.value, status.DONE, props.currentProject));
