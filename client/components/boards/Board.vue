@@ -53,11 +53,16 @@ export default {
     const tasksInProgress = computed(() => filterTasks(tasks.value, status.IN_PROGRESS, props.currentProject));
     const tasksDone = computed(() => filterTasks(tasks.value, status.DONE, props.currentProject));
 
-    const handleColumnChange = task => {
-      tasks.value = tasks.value.map(it => {
-        if (it.id === task.id) it.status = task.status;
-        return it;
-      });
+    const handleColumnChange = async ({ id, status }) => {
+      return api
+        .update(id, { status })
+        .then(() => {
+          tasks.value = tasks.value.map(it => {
+            if (it.id === id) it.status = status;
+            return it;
+          });
+        })
+        .catch(err => console.log(err));
     };
 
     return {
