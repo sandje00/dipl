@@ -65,7 +65,6 @@ async function login(req, res) {
     expiresIn: '5 days'
   });
   res.cookie('accessToken', token, { httpOnly: true });
-  res.cookie('isAuthenticated', true);
   return res.status(OK).json({
     user: pick(user, ['id', 'username', 'imgUrl', 'active'])
   });
@@ -73,7 +72,6 @@ async function login(req, res) {
 
 function logout(req, res) {
   res.cookie('accessToken', null, { httpOnly: true });
-  res.cookie('isAuthenticated', false);
   return res.status(OK).json({ message: msg.LOGOUT });
 }
 

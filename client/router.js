@@ -4,7 +4,7 @@ import Auth from '@/components/auth';
 import Boards from '@/components/boards';
 import Docs from '@/components/Docs';
 import ForgotPassword from '@/components/auth/ForgotPassword';
-import { getCookieValue } from '@/utils/cookie';
+import get from 'lodash/get';
 import Home from '@/components/Home';
 import Login from '@/components/auth/Login';
 import NewProject from '@/components/projects/NewProject';
@@ -13,6 +13,7 @@ import ProjectDetails from '@/components/projects/ProjectDetails';
 import Projects from '@/components/projects';
 import Register from '@/components/Register';
 import ResetPassword from '@/components/auth/ResetPassword';
+import store from './store';
 import Verify from '@/components/auth/Verify';
 
 const routes = [
@@ -82,11 +83,10 @@ const history = createWebHistory();
 
 const router = createRouter({ routes, history });
 
-const isAuthenticated = () => getCookieValue('isAuthenticated');
+const isAuthenticated = () => get(store.state, 'auth.user');
 const requiresAuth = route => route.matched.some(it => it.meta.requiresAuth);
 
 router.beforeEach((to, _from, next) => {
-  // TODO Figure out how to solve this IsAuthenticated() workaround properly
   if (requiresAuth(to) && isAuthenticated() === 'false') {
     return next({ name: 'login' });
   }
