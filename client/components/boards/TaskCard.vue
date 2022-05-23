@@ -7,7 +7,7 @@
       <h3 class="task-card-title">{{ title }}</h3>
       <span>{{ type }}</span>
     </div>
-    <p class="py-m">{{ description }}</p>
+    <p class="py-m">{{ description || '' }}</p>
     <span :class="[priority]" class="pt-m priority">
       {{ priority }}
     </span>
