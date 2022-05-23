@@ -4,7 +4,10 @@
       <h2 class="board-column-title">
         {{ columnTitle }}
       </h2>
-      <base-button neutral rounded>
+      <base-button
+        @click="toggleOpen"
+        neutral
+        rounded>
         <h2>+</h2>
       </base-button>
     </div>
@@ -22,12 +25,19 @@
       ></task-card>
     </div>
   </div>
+  <new-task-modal
+    :isOpen="isOpen"
+    :status="status"
+    @close-modal="toggleOpen"
+  ></new-task-modal>
 </template>
 
 <script>
 import BaseButton from '../common/BaseButton';
+import NewTaskModal from './NewTask';
 import TaskCard from './TaskCard';
 import useDragAndDrop from '@/composables/useDragAndDrop';
+import useModal from '@/composables/useModal';
 
 const toUpperSnakeCase = str => str.toUpperCase().split(' ').join('_');
 
@@ -37,20 +47,28 @@ export default {
     columnTitle: { type: String, required: true },
     tasks: { type: Array, default: () => ([]) }
   },
+  emits: [ 'column-change' ],
   setup(props, { emit }) {
+    const status = toUpperSnakeCase(props.columnTitle);
     const { startDrag, onDrop } = useDragAndDrop();
-    const columnChange = id => emit('column-change', {
-      id,
-      status: toUpperSnakeCase(props.columnTitle)
-    });
+    const columnChange = id => emit('column-change', { id, status });
+
+    const { isOpen, toggleOpen } = useModal();
 
     return {
+      status,
       startDrag,
       onDrop,
       columnChange,
+      isOpen,
+      toggleOpen
     };
   },
-  components: { BaseButton, TaskCard }
+  components: {
+    BaseButton,
+    NewTaskModal,
+    TaskCard
+  }
 };
 </script>
 

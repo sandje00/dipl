@@ -9,7 +9,10 @@ $spacings: (
 );
 
 $z-indices: (
-  "layout": 10
+  "layout": 10,
+  "modal": 20,
+  "modal-overlay": 30,
+  "modal-content": 40
 );
 
 :root {
