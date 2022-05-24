@@ -1,12 +1,12 @@
 'use strict';
 
-const { Umzug, SequelizeStorage } = require('umzug');
 const { db: config } = require('../../config');
 const invoke = require('lodash/invoke');
 const { logger } = require('../logger');
 const path = require('path');
 const pick = require('lodash/pick');
 const { Sequelize } = require('sequelize');
+const Umzug = require('umzug');
 
 const User = require('../../user/user.model');
 const Project = require('../../project/project.model');
@@ -18,7 +18,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 function initialize() {
   const umzug = new Umzug({
-    storage: new SequelizeStorage({ sequelize }),
+    storage: 'sequelize',
     storageOptions: {
       sequelize,
       tableName: config.migrationStorageTableName
