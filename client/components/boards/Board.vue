@@ -29,7 +29,7 @@ const filterTasks = (tasks, status, projectTitle) => {
     .filter(
       projectTitle === 'All Projects'
       ? it => it.status === status
-      : it => it.project.title === projectTitle && it.status === status
+      : it => it.project?.title === projectTitle && it.status === status
     );
 };
 

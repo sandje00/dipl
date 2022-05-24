@@ -13,7 +13,7 @@
     </span>
     <div class="mt-l">
       <div
-        v-if="project.id"
+        v-if="project?.id"
         class="flex-h align-items-center mt-xs"
       >
         <icon-projects class="mr-xs" :width="24" :height="24">
@@ -21,7 +21,7 @@
         <span>{{ project.title }}</span>
       </div>
       <div
-        v-if="parentTask.id"
+        v-if="parentTask?.id"
         class="flex-h align-items-center mt-xs"
       >
         <icon-task class="mr-xs">
