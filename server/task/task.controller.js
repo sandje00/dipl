@@ -23,7 +23,7 @@ async function getAll({ user: { id } }, res) {
       attributes: [ 'id', 'title' ]
     }, {
       model: Task,
-      as: 'parent',
+      as: 'parentTask',
       attributes: [ 'id', 'title' ]
     }]
   });
