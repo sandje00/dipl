@@ -1,5 +1,5 @@
 export default function useDragAndDrop() {
-  const startDrag = (event, itemId) => {
+  const onDragStart = (event, itemId) => {
     event.dataTransfer.dropEffect = 'move';
     event.dataTransfer.effectAllowed = 'move';
     event.dataTransfer.setData('item', itemId.toString());
@@ -10,5 +10,5 @@ export default function useDragAndDrop() {
     action(itemId);
   };
 
-  return { startDrag, onDrop };
+  return { onDragStart, onDrop };
 }
