@@ -18,7 +18,9 @@
         v-for="task in tasks"
         :key="task.id"
         v-bind="task"
+        @click="toggleDraggable"
         @dragstart="onDragStart($event, task.id)"
+        @dragend="onDragEnd($event)"
       ></task-card>
     </div>
   </div>
@@ -37,15 +39,23 @@ export default {
     columnTitle: { type: String, required: true },
     tasks: { type: Array, default: () => ([]) }
   },
+  emits: [ 'column-change' ],
   setup(props, { emit }) {
-    const { onDragStart, onDrop } = useDragAndDrop();
+    const {
+      toggleDraggable,
+      onDragStart,
+      onDragEnd,
+      onDrop
+    } = useDragAndDrop();
     const columnChange = id => emit('column-change', {
       id,
       status: toUpperSnakeCase(props.columnTitle)
     });
 
     return {
+      toggleDraggable,
       onDragStart,
+      onDragEnd,
       onDrop,
       columnChange,
     };
