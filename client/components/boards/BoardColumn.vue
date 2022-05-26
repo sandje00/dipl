@@ -29,7 +29,7 @@
   </div>
   <new-task-modal
     :isOpen="isOpen"
-    :status="status"
+    :status="taskStatus"
     @close-modal="toggleOpen"
   ></new-task-modal>
 </template>
@@ -37,6 +37,7 @@
 <script>
 import BaseButton from '../common/BaseButton';
 import NewTaskModal from './NewTask';
+import { ref } from 'vue';
 import TaskCard from './TaskCard';
 import useDragAndDrop from '@/composables/useDragAndDrop';
 import useModal from '@/composables/useModal';
@@ -51,7 +52,7 @@ export default {
   },
   emits: [ 'column-change' ],
   setup(props, { emit }) {
-    const status = toUpperSnakeCase(props.columnTitle);
+    const taskStatus = ref(toUpperSnakeCase(props.columnTitle));
     const {
       toggleDraggable,
       onDragStart,
@@ -63,6 +64,7 @@ export default {
     const { isOpen, toggleOpen } = useModal();
 
     return {
+      taskStatus,
       toggleDraggable,
       onDragStart,
       onDragEnd,
