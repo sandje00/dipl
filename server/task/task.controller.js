@@ -1,8 +1,13 @@
 'use strict';
 
-const { BAD_REQUEST, CREATED, OK } = require('../shared/errors/status');
+const {
+  BAD_REQUEST,
+  CREATED,
+  NO_CONTENT,
+  OK
+} = require('../shared/errors/status');
+const { Project, sequelize } = require('../shared/database');
 const HttpError = require('../shared/errors/httpError');
-const { Project } = require('../shared/database');
 const Task = require('./task.model');
 const { UniqueConstraintError } = require('sequelize');
 
@@ -60,9 +65,21 @@ async function update({ body, task }, res) {
   return res.status(OK).json({ message: msg.SUCCESS_UPDATE_TASK });
 }
 
+async function deleteOne({ task }, res) {
+  await sequelize.transaction(async (t) => {
+    await Task.destroy(
+      { where: { parentTaskId: task.id } },
+      { transaction: t }
+    );
+    await task.destroy({ transaction: t });
+  });
+  return res.status(NO_CONTENT).send();
+}
+
 module.exports = {
   getAll,
   create,
   getOne,
-  update
+  update,
+  deleteOne
 };
