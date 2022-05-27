@@ -14,7 +14,8 @@ router
   .get('/:projectId?', ctrl.getAll)
   .post('/', ctrl.create)
   .get('/:noteId', ctrl.getOne)
-  .patch('/:noteId', ctrl.update);
+  .patch('/:noteId', ctrl.update)
+  .delete('/:noteId', ctrl.deleteOne);
 
 module.exports = { path: '/notes', router };
 
@@ -24,5 +25,5 @@ async function getNote(req, _, next, noteId) {
       if (!note) throw new HttpError(NOT_FOUND, { message: 'Note not found.' });
       req.note = note;
       next();
-    })
+    });
 }

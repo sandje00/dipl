@@ -14,7 +14,8 @@ router
   .get('/', ctrl.getAll)
   .post('/', ctrl.create)
   .get('/:taskId', ctrl.getOne)
-  .patch('/:taskId', ctrl.update);
+  .patch('/:taskId', ctrl.update)
+  .delete('/:taskId', ctrl.deleteOne);
 
 module.exports = { path: '/tasks', router };
 
@@ -24,5 +25,5 @@ async function getTask(req, _, next, taskId) {
       if (!task) throw new HttpError(NOT_FOUND, { message: 'Task not found.' });
       req.task = task;
       next();
-    })
+    });
 }

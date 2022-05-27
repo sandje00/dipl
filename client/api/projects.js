@@ -5,7 +5,8 @@ const url = {
   getAllTitles: '/projects/titles',
   create: '/projects',
   getOne: id => `/projects/${id}`,
-  update: id => `/projects/${id}`
+  update: id => `/projects/${id}`,
+  deleteOne: id => `/projects/${id}`
 };
 
 function getAll() {
@@ -28,10 +29,15 @@ function update(projectId, data) {
   return client.patch(url.update(projectId), data);
 }
 
+function deleteOne(projectId) {
+  return client.delete(url.deleteOne(projectId));
+}
+
 export default {
   getAll,
   getAllTitles,
   create,
   getOne,
-  update
+  update,
+  deleteOne
 };

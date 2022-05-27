@@ -1,6 +1,12 @@
 'use strict';
 
-const { BAD_REQUEST, CREATED, OK } = require('../shared/errors/status');
+const {
+  BAD_REQUEST,
+  CREATED,
+  NO_CONTENT,
+  OK
+} = require('../shared/errors/status');
+const { Note, sequelize, Task } = require('../shared/database');
 const HttpError = require('../shared/errors/httpError');
 const Project = require('./project.model');
 const { UniqueConstraintError } = require('sequelize');
@@ -56,12 +62,28 @@ async function getAllTitles({ user: { id } }, res) {
   });
 }
 
+async function deleteOne({ project }, res) {
+  await sequelize.transaction(async (t) => {
+    await Note.destroy(
+      { where: { projectId: project.id } },
+      { transaction: t }
+    );
+    await Task.destroy(
+      { where: { projectId: project.id } },
+      { transaction: t }
+    );
+    await project.destroy({ transaction: t });
+  });
+  return res.status(NO_CONTENT).send();
+}
+
 module.exports = {
   getAll,
   create,
   getOne,
   update,
-  getAllTitles
+  getAllTitles,
+  deleteOne
 };
 
 function keyValuesToArray(objArr, key) {
