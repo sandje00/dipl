@@ -87,7 +87,7 @@ const isAuthenticated = () => get(store.state, 'auth.user');
 const requiresAuth = route => route.matched.some(it => it.meta.requiresAuth);
 
 router.beforeEach((to, _from, next) => {
-  if (requiresAuth(to) && isAuthenticated() === 'false') {
+  if (requiresAuth(to) && !isAuthenticated()) {
     return next({ name: 'login' });
   }
   else return next();
