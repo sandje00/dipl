@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { computed, onBeforeMount } from 'vue';
+import { computed } from 'vue';
 import get from 'lodash/get';
 import IconAccount from '../icons/IconAccount';
 import { useStore } from 'vuex';
@@ -16,9 +16,6 @@ export default {
   setup() {
     const store = useStore();
     const username = computed(() => get(store.state, 'auth.user.username'));
-
-    onBeforeMount(() => !username.value && store.dispatch('auth/fetchUser'));
-
     return { username };
   },
   components: { IconAccount }
