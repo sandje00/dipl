@@ -15,7 +15,8 @@ router
   .get('/titles', ctrl.getAllTitles)
   .post('/', ctrl.create)
   .get('/:projectId', ctrl.getOne)
-  .patch('/:projectId', ctrl.update);
+  .patch('/:projectId', ctrl.update)
+  .delete('/:projectId', ctrl.deleteOne);
 
 module.exports = { path: '/projects', router };
 
