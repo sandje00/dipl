@@ -3,9 +3,19 @@
   <input
     :value="modelValue"
     :class="{ error, borderless }"
+    :list="list"
     v-bind="{...$attrs, onInput: updateModelValue }"
     class="mt-s px-m py-s input"
   >
+  <datalist :id="list">
+    <option
+      v-for="option in options"
+      :key="option"
+      :value="option"
+    >
+      {{ option }}
+    </option>
+  </datalist>
   <span class="pl-xs error">{{ error }}</span>
 </template>
 
@@ -18,7 +28,9 @@ export default {
     label: { type: String, default: '' },
     modelValue: { type: String, default: '' },
     error: { type: String, default: '' },
-    borderless: { type: Boolean, default: false }
+    borderless: { type: Boolean, default: false },
+    list: { type: String, default: '' },
+    options: { type: Array, default: () => ([]) }
   },
   setup(props, context) {
     const { updateModelValue } = useModelValue(props, context);
