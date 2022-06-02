@@ -7,8 +7,8 @@ const url = {
   update: id => `/tasks/${id}`
 };
 
-function getAll() {
-  return client.get(url.getAll);
+function getAll(search, projectId) {
+  return client.get(url.getAll, { params: { search, projectId } });
 }
 
 function create(task) {

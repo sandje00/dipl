@@ -1,22 +1,28 @@
 'use strict';
 
+const { col, fn, Op, UniqueConstraintError, where } = require('sequelize');
 const { BAD_REQUEST, CREATED, OK } = require('../shared/errors/status');
 const HttpError = require('../shared/errors/httpError');
 const { Project } = require('../shared/database');
 const Task = require('./task.model');
-const { UniqueConstraintError } = require('sequelize');
 
 const msg = {
   SUCCESS_ADD_TASK: 'You have added new task successfully.',
   SUCCESS_UPDATE_TASK: 'You have updated task successfully.'
 };
 
-async function getAll({ user: { id } }, res) {
+async function getAll({ user, query: { search, projectId } }, res) {
   const tasks = await Task.findAll({
     attributes: {
       exclude: [ 'userId', 'projectId', 'parentTaskId' ]
     },
-    where: { userId: id },
+    where: {
+      [Op.and]: [
+        where(col('Task.user_id'), Op.eq, user.id),
+        projectId && where(col('Task.project_id'), Op.eq, projectId),
+        search && where(fn('lower', col('Task.title')), Op.like, `%${search}%`)
+      ]
+    },
     include: [{
       model: Project,
       as: 'project',
