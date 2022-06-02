@@ -8,8 +8,8 @@ const url = {
   update: id => `/projects/${id}`
 };
 
-function getAll() {
-  return client.get(url.getAll);
+function getAll(search) {
+  return client.get(url.getAll, { params: { search } });
 }
 
 function getAllTitles() {

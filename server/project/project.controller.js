@@ -1,18 +1,28 @@
 'use strict';
 
+const { col, fn, Op, UniqueConstraintError, where } = require('sequelize');
 const { BAD_REQUEST, CREATED, OK } = require('../shared/errors/status');
 const HttpError = require('../shared/errors/httpError');
 const Project = require('./project.model');
-const { UniqueConstraintError } = require('sequelize');
 
 const msg = {
   SUCCESS_ADD_PROJECT: 'You have added new project successfully.',
   SUCCESS_UPDATE_PROJECT: 'You have updated a project successfully.'
 };
 
-async function getAll({ user: { id } }, res) {
-  // TODO Add pagination
-  const projects = await Project.findAll({ where: { userId: id } });
+async function getAll({ user, query: { search } }, res) {
+  const filter = {
+    where: {
+      [Op.and]: [
+        where(col('user_id'), Op.eq, user.id),
+        search && where(fn('lower', col('title')), Op.like, `%${search}%`)
+      ]
+    }
+  };
+  const order = {
+    order: [ [ 'updated_at', 'DESC' ] ]
+  }
+  const projects = await Project.findAll({ ...filter, ...order });
   return res.status(OK).json({ projects });
 }
 
