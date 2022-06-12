@@ -1,7 +1,8 @@
 <template>
   <button
     :class="[
-      neutral ? 'neutral' : 'primary',
+      { neutral, secondary },
+      !neutral && !secondary && 'primary',
       rounded ? 'px-m rounded' : 'px-xl'
     ]"
     class="py-s button"
@@ -15,6 +16,7 @@ export default {
   name: 'base-button',
   props: {
     neutral: { type: Boolean, default: false },
+    secondary: { type: Boolean, default: false },
     rounded: { type: Boolean, default: false }
   }
 }
@@ -40,8 +42,14 @@ export default {
   color: var(--color-white);
 }
 
+.secondary {
+  background-color: var(--color-background-button-secondary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+}
+
 .neutral {
-  background-color: var(--color-background-neutral);
+  background-color: var(--color-background-button-neutral);
   color: var(--color-text-secondary);
   font-weight: $font-weight-bold;
 }

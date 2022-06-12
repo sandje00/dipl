@@ -4,7 +4,7 @@
       v-if="!isEditMode"
       @click="toggleEditMode"
       class="edit-button"
-      neutral
+      secondary
     >
       Edit
     </base-button>
@@ -39,7 +39,7 @@
       <base-button
         @click="toggleEditMode"
         class="mr-m"
-        neutral
+        secondary
       >
         Discard
       </base-button>
