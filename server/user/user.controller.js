@@ -71,7 +71,8 @@ async function login(req, res) {
 }
 
 function logout(req, res) {
-  res.cookie('accessToken', null, { httpOnly: true });
+  res.clearCookie('accessToken');
+  res.clearCookie('githubAccessToken');
   return res.status(OK).json({ message: msg.LOGOUT });
 }
 
