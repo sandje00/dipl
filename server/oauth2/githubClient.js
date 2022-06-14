@@ -21,7 +21,12 @@ class GitHubClient {
   }
 
   buildAuthorizeUri(scope) {
-    return `${this._endpoints.authorize}?client_id=${this.clientId}&redirect_uri=${this.redirectUri}&scope=${scope}&state=${this._generateState(64)}`;
+    const state = this._generateState(64);
+    const githubAuthUri = `${this._endpoints.authorize}?client_id=${this.clientId}&redirect_uri=${this.redirectUri}&scope=${scope}&state=${state}`;
+    return {
+      state,
+      githubAuthUri
+    };
   }
 
   async accessToken(code) {

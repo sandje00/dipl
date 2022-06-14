@@ -5,6 +5,7 @@
 <script>
 import api from '@/api/oauth2';
 import { onBeforeMount } from 'vue';
+import pick from 'lodash/pick';
 import { useRoute } from 'vue-router';
 
 export default {
@@ -12,8 +13,7 @@ export default {
   setup() {
     const route = useRoute();
     const exchangeCodeForToken = async () => {
-      console.log(route.query.code)
-      return api.accessToken(route.query.code)
+      return api.accessToken(pick(route.query, ['code', 'state']))
         .then(({ data: { data } }) => {
           console.log(data);
         })

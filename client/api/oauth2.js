@@ -9,8 +9,8 @@ function authorize() {
   return client.get(url.authorize);
 }
 
-function accessToken(code) {
-  return client.post(url.accessToken, null, { params: { code } });
+function accessToken(params) {
+  return client.post(url.accessToken, null, { params });
 }
 
 export default {
