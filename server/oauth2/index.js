@@ -34,5 +34,7 @@ async function accessToken({
     res.cookie('githubAccessToken', data.access_token, { httpOnly: true });
   }
   res.clearCookie('githubCsrfState');
-  return res.status(OK).send();
+  return res.status(OK).json({
+    message: 'You have authorized GitHub successfully.'
+  });
 }

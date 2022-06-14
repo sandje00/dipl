@@ -1,16 +1,15 @@
 <template>
-  <div>
+  <form-layout>
     <router-view>
     </router-view>
-  </div>
+  </form-layout>
 </template>
 
 <script>
+import FormLayout from '../common/FormLayout';
+
 export default {
-  name: 'oauth-view'
-}
+  name: 'oauth-view',
+  components: { FormLayout }
+};
 </script>
-
-<style lang="scss" scoped>
-
-</style>

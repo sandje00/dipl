@@ -22,5 +22,5 @@ export default {
     return { authGithub };
   },
   components: { AppLayout }
-}
+};
 </script>
