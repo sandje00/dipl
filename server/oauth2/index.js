@@ -27,7 +27,6 @@ async function accessToken({
     throw new HttpError(FORBIDDEN, 'Your access to this resource is forbidden');
   }
   const { data } = await githubClient.accessToken(code);
-  console.log(data);
   if (data?.error) {
     throw new HttpError(BAD_REQUEST, data.error_description);
   }
