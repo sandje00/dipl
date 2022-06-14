@@ -4,16 +4,18 @@ import Auth from '@/components/auth';
 import Boards from '@/components/boards';
 import Docs from '@/components/Docs';
 import ForgotPassword from '@/components/auth/ForgotPassword';
-import get from 'lodash/get';
+// import get from 'lodash/get';
 import Home from '@/components/Home';
 import Login from '@/components/auth/Login';
 import NewProject from '@/components/projects/NewProject';
+import OAuth from '@/components/oauth2';
 import Overview from '@/components/Overview';
 import ProjectDetails from '@/components/projects/ProjectDetails';
 import Projects from '@/components/projects';
+import Redirect from '@/components/oauth2/Redirect';
 import Register from '@/components/Register';
 import ResetPassword from '@/components/auth/ResetPassword';
-import store from './store';
+// import store from './store';
 import Verify from '@/components/auth/Verify';
 
 const routes = [
@@ -76,6 +78,18 @@ const routes = [
     name: 'docs',
     component: Docs,
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/oauth2',
+    component: OAuth,
+    children: [
+      {
+        path: 'redirect',
+        name: 'oauth-redirect',
+        component: Redirect,
+        meta: { requiresAuth: true }
+      }
+    ]
   }
 ];
 
@@ -83,7 +97,9 @@ const history = createWebHistory();
 
 const router = createRouter({ routes, history });
 
-const isAuthenticated = () => get(store.state, 'auth.user');
+// TODO Resolve store user fetching working along route guard
+
+/* const isAuthenticated = () => get(store.state, 'auth.user');
 const requiresAuth = route => route.matched.some(it => it.meta.requiresAuth);
 
 router.beforeEach((to, _from, next) => {
@@ -91,6 +107,6 @@ router.beforeEach((to, _from, next) => {
     return next({ name: 'login' });
   }
   else return next();
-});
+}); */
 
 export default router;
