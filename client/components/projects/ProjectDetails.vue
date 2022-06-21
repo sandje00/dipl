@@ -1,13 +1,5 @@
 <template>
   <div class="flex-v pa-m container">
-    <base-button
-      v-if="!isEditMode"
-      @click="toggleEditMode"
-      class="edit-button"
-      secondary
-    >
-      Edit
-    </base-button>
     <span class="mt-m">Title:</span>
     <h2 v-if="!isEditMode" class="title">
       {{ project.title }}
@@ -21,7 +13,7 @@
       <span v-if="!project.description">
         There is no description provided
       </span>
-      <p v-else class=" description">
+      <p v-else class="description">
         {{ project.description }}
       </p>
     </div>
@@ -30,18 +22,22 @@
       v-model="projectData.description"
     ></base-textarea>
     <div v-if="isEditMode" class="mt-m flex-h">
-      <base-button
-        @click="submit"
-        class="mr-m"
-      >
+      <base-button @click="submit" class="mr-m">
         Submit
       </base-button>
-      <base-button
-        @click="toggleEditMode"
-        class="mr-m"
-        secondary
-      >
+      <base-button @click="toggleEditMode" class="mr-m" secondary>
         Discard
+      </base-button>
+    </div>
+    <div
+      v-if="!isEditMode"
+      class="flex-h justify-center align-items-center controls"
+    >
+      <base-button @click="toggleEditMode" class="ml-m" secondary>
+        Edit
+      </base-button>
+      <base-button @click="deleteProject" class="ml-m" secondary>
+        Delete
       </base-button>
     </div>
   </div>
@@ -53,6 +49,7 @@ import api from '@/api/projects';
 import BaseButton from '../common/BaseButton';
 import BaseInput from '../common/BaseInput';
 import BaseTextarea from '../common/BaseTextarea';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'project-details',
@@ -97,15 +94,30 @@ export default {
         });
     };
 
+    const router = useRouter();
+    const deleteProject = () => {
+      const question = `Are you sure you want to delete project ${project.value?.title} and all of its tasks and notes?`;
+      const result = confirm(question);
+      if (!result) return;
+      return api.deleteOne(projectId)
+        .then(() => router.push({ name: 'all-projects' }))
+        .catch(err => console.error(err));
+    };
+
     return {
       project,
       projectData,
       isEditMode,
       toggleEditMode,
-      submit
+      submit,
+      deleteProject
     };
   },
-  components: { BaseButton, BaseInput, BaseTextarea }
+  components: {
+    BaseButton,
+    BaseInput,
+    BaseTextarea
+  }
 };
 </script>
 
@@ -115,7 +127,7 @@ export default {
 .container {
   position: relative;
 
-  .edit-button {
+  .controls {
     position: absolute;
     top: 1rem;
     right: 1rem;
