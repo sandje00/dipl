@@ -1,11 +1,10 @@
-import auth from './modules/auth';
 import { createStore } from 'vuex';
-
-const refreshUser = store => !store.state.auth.user && store.dispatch('auth/fetchUser');
+import modules from './modules';
+import plugins from './plugins';
 
 const store = createStore({
-  modules: { auth },
-  plugins: [ refreshUser ]
+  modules,
+  plugins
 });
 
 export default store;
