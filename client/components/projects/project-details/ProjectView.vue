@@ -41,7 +41,7 @@ export default {
       const question = `Are you sure you want to delete project ${props.title} and all of its tasks and notes?`;
       const result = confirm(question);
       return result && api.deleteOne(props.id)
-        .then(() => router.push({ name: 'all-projects' }))
+        .then(() => router.push({ name: 'projects-all' }))
         .catch(err => console.error(err));
     };
 

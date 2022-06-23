@@ -3,11 +3,11 @@
   <div class="flex-h ml-l pt-l page-navigation">
     <base-tab
       title="All Projects"
-      :to="{ name: 'all-projects' }"
+      :to="{ name: 'projects-all' }"
     ></base-tab>
     <base-tab
       title="New Project"
-      :to="{ name: 'new-project' }"
+      :to="{ name: 'project-new' }"
     ></base-tab>
   </div>
 </template>

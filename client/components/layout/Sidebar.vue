@@ -12,7 +12,7 @@
         </div>
       </router-link>
       <router-link
-        :to="{ name: 'all-projects' }"
+        :to="{ name: 'projects-all' }"
         class="navlink"
       >
         <div class="flex-v align-items-center pa-m">
