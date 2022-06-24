@@ -31,7 +31,7 @@ import BaseInput from '../common/BaseInput';
 import BaseTextarea from '../common/BaseTextarea';
 
 export default {
-  name: 'new-project',
+  name: 'project-new',
   setup() {
     const validationSchema = {
       title: { required: true }
