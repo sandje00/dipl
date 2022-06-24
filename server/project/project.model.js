@@ -3,7 +3,7 @@
 const { Model } = require('sequelize');
 
 class Project extends Model {
-  static fields({ INTEGER, STRING, TEXT, DATE }) {
+  static fields({ INTEGER, STRING, TEXT, JSONB, DATE }) {
     return {
       id: {
         type: INTEGER,
@@ -21,6 +21,10 @@ class Project extends Model {
       },
       imgUrl: {
         type: TEXT
+      },
+      repo: {
+        type: JSONB,
+        defaultValue: {}
       },
       createdAt: {
         type: DATE,

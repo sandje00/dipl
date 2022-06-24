@@ -21,6 +21,10 @@ module.exports = {
         type: Sequelize.TEXT,
         field: 'img_url'
       },
+      repo: {
+        type: Sequelize.JSONB,
+        defaultValue: {}
+      },
       userId: {
         type: Sequelize.INTEGER,
         references: {
