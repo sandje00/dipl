@@ -14,8 +14,8 @@
     <base-button @click="toggleEditMode" class="ml-m" secondary>
       Edit
     </base-button>
-    <base-button @click="toggleEditMode" class="ml-m" secondary>
-      Project to GitHub repo
+    <base-button @click="createRepo" class="ml-m" secondary>
+      Create GitHub repo
     </base-button>
     <base-button @click="deleteProject" class="ml-m" secondary alert>
       Delete
@@ -26,6 +26,7 @@
 <script>
 import api from '@/api/projects';
 import BaseButton from '../../common/BaseButton';
+import oauth2 from '@/api/oauth2';
 import { useRouter } from 'vue-router';
 
 export default {
@@ -41,16 +42,30 @@ export default {
 
     const router = useRouter();
     const deleteProject = () => {
-      const question = `Are you sure you want to delete project ${props.title} and all of its tasks and notes?`;
-      const result = confirm(question);
+      const result = confirm(`Are you sure you want to delete project ${props.title} and all of its tasks and notes?`);
       return result && api.deleteOne(props.id)
         .then(() => router.push({ name: 'projects-all' }))
         .catch(err => console.error(err));
     };
 
+    const createRepo = async () => {
+      const isPrivate = confirm('Do you want repo to be private?');
+      return api.createRepo(props.id, isPrivate)
+        .then(({ data }) => console.log(data))
+        .catch(({ status, data: { error } }) => {
+          // TDDO Refactor this!
+          if (status !== 403) console.log(error);
+          const result = confirm(error);
+          return result && oauth2.authorize()
+            .then(({ data: { githubAuthUri } }) => window.open(githubAuthUri))
+            .catch(err => console.error(err));
+        });
+    };
+
     return {
       toggleEditMode,
-      deleteProject
+      deleteProject,
+      createRepo
     };
   },
   components: { BaseButton }

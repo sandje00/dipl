@@ -6,7 +6,8 @@ const url = {
   create: '/projects',
   getOne: id => `/projects/${id}`,
   update: id => `/projects/${id}`,
-  deleteOne: id => `/projects/${id}`
+  deleteOne: id => `/projects/${id}`,
+  createRepo: id => `/projects/${id}/create-repo`,
 };
 
 function getAll() {
@@ -33,11 +34,18 @@ function deleteOne(projectId) {
   return client.delete(url.deleteOne(projectId));
 }
 
+function createRepo(projectId, isPrivate) {
+  return client.post(url.createRepo(projectId), null, {
+    params: { isPrivate }
+  });
+}
+
 export default {
   getAll,
   getAllTitles,
   create,
   getOne,
   update,
-  deleteOne
+  deleteOne,
+  createRepo
 };
