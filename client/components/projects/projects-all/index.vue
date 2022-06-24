@@ -18,7 +18,7 @@ import api from '@/api/projects';
 import ProjectCard from './ProjectCard';
 
 export default {
-  name: 'all-projects',
+  name: 'projects-all',
   setup() {
     const projects = ref([]);
     const fetchProjects = async () => {

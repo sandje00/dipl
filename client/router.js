@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import AllProjects from '@/components/projects/AllProjects';
 import Auth from '@/components/auth';
 import Boards from '@/components/boards';
 import Docs from '@/components/Docs';
 import ForgotPassword from '@/components/auth/ForgotPassword';
 import Home from '@/components/Home';
 import Login from '@/components/auth/Login';
-import NewProject from '@/components/projects/NewProject';
 import Overview from '@/components/Overview';
-import ProjectDetails from '@/components/projects/ProjectDetails';
 import Projects from '@/components/projects';
+import ProjectsAll from '@/components/projects/projects-all';
+import ProjectDetails from '@/components/projects/project-details';
+import ProjectNew from '@/components/projects/ProjectNew';
 import Register from '@/components/Register';
 import ResetPassword from '@/components/auth/ResetPassword';
 import Verify from '@/components/auth/Verify';
@@ -44,14 +44,14 @@ const routes = [
     children: [
       {
         path: 'all',
-        name: 'all-projects',
-        component: AllProjects,
+        name: 'projects-all',
+        component: ProjectsAll,
         meta: { requiresAuth: true }
       },
       {
         path: 'new',
-        name: 'new-project',
-        component: NewProject,
+        name: 'project-new',
+        component: ProjectNew,
         meta: { requiresAuth: true }
       },
       {
