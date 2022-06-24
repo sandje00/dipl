@@ -14,7 +14,10 @@
     <base-button @click="toggleEditMode" class="ml-m" secondary>
       Edit
     </base-button>
-    <base-button @click="deleteProject" class="ml-m" secondary>
+    <base-button @click="toggleEditMode" class="ml-m" secondary>
+      Project to GitHub repo
+    </base-button>
+    <base-button @click="deleteProject" class="ml-m" secondary alert>
       Delete
     </base-button>
   </div>
