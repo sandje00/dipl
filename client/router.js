@@ -5,8 +5,10 @@ import Docs from '@/components/Docs';
 import ForgotPassword from '@/components/auth/ForgotPassword';
 import Home from '@/components/Home';
 import Login from '@/components/auth/Login';
+import OAuth from '@/components/oauth2';
 import Overview from '@/components/Overview';
 import Projects from '@/components/projects';
+import Redirect from '@/components/oauth2/Redirect';
 import ProjectsAll from '@/components/projects/projects-all';
 import ProjectDetails from '@/components/projects/project-details';
 import ProjectNew from '@/components/projects/ProjectNew';
@@ -74,6 +76,18 @@ const routes = [
     name: 'docs',
     component: Docs,
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/oauth2',
+    component: OAuth,
+    children: [
+      {
+        path: 'redirect',
+        name: 'oauth-redirect',
+        component: Redirect,
+        meta: { requiresAuth: true }
+      }
+    ]
   }
 ];
 
