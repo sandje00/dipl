@@ -1,6 +1,7 @@
 'use strict';
 
 const authenticate = require('../shared/auth');
+const authGithub = require('../shared/auth/authGithub');
 const ctrl = require('./project.controller');
 const HttpError = require('../shared/errors/httpError');
 const { NOT_FOUND } = require('../shared/errors/status');
@@ -16,7 +17,9 @@ router
   .post('/', ctrl.create)
   .get('/:projectId', ctrl.getOne)
   .patch('/:projectId', ctrl.update)
-  .delete('/:projectId', ctrl.deleteOne);
+  .delete('/:projectId', ctrl.deleteOne)
+  .use(authGithub)
+  .post('/:projectId/create-repo', ctrl.createRepo);
 
 module.exports = { path: '/projects', router };
 

@@ -7,7 +7,9 @@ const {
   OK
 } = require('../shared/errors/status');
 const { Note, sequelize, Task } = require('../shared/database');
+const githubClient = require('../oauth2/githubClient');
 const HttpError = require('../shared/errors/httpError');
+const pick = require('lodash/pick');
 const Project = require('./project.model');
 const { UniqueConstraintError } = require('sequelize');
 
@@ -77,13 +79,27 @@ async function deleteOne({ project }, res) {
   return res.status(NO_CONTENT).send();
 }
 
+async function createRepo({ project, githubAccessToken, query: { isPrivate } }, res) {
+  const data = {
+    name: project.title,
+    description: project.description,
+    private: isPrivate
+  };
+  const repoInfo = await githubClient.createRepo(githubAccessToken, data);
+  const repo = pick(repoInfo.data, [ 'id', 'full_name', 'private', 'html_url' ]);
+  project.set({ repo });
+  await project.save();
+  return res.status(CREATED).json({ repo });
+}
+
 module.exports = {
   getAll,
   create,
   getOne,
   update,
   getAllTitles,
-  deleteOne
+  deleteOne,
+  createRepo
 };
 
 function keyValuesToArray(objArr, key) {

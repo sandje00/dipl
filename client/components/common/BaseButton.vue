@@ -1,7 +1,7 @@
 <template>
   <button
     :class="[
-      { neutral, secondary },
+      { neutral, secondary, alert },
       !neutral && !secondary && 'primary',
       rounded ? 'px-m rounded' : 'px-xl'
     ]"
@@ -17,6 +17,7 @@ export default {
   props: {
     neutral: { type: Boolean, default: false },
     secondary: { type: Boolean, default: false },
+    alert: { type: Boolean, default: false },
     rounded: { type: Boolean, default: false }
   }
 }
@@ -46,6 +47,11 @@ export default {
   background-color: var(--color-background-button-secondary);
   color: var(--color-text-primary);
   border: 1px solid var(--color-border);
+
+  &.alert {
+    color: var(--color-alert);
+    font-weight: $font-weight-bold;
+  }
 }
 
 .neutral {

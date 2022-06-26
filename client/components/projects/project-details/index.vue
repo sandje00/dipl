@@ -10,6 +10,7 @@
       v-else
       v-bind="project"
       @toggle-edit-mode="toggleEditMode"
+      @repo-updated="onRepoUpdated"
     ></project-view>
   </div>
 </template>
@@ -43,13 +44,18 @@ export default {
     const onProjectUpdated = projectData => {
       project.value = { ...projectData };
       toggleEditMode();
-    }
+    };
+
+    const onRepoUpdated = repo => {
+      project.value.repo = repo;
+    };
 
     return {
       project,
       isEditMode,
       toggleEditMode,
-      onProjectUpdated
+      onProjectUpdated,
+      onRepoUpdated
     };
   },
   components: {
