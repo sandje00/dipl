@@ -1,4 +1,7 @@
 <template>
+  <label v-if="label" class="mt-m mb-s">
+    {{ label }}
+  </label>
   <select
     :value="modelValue"
     v-bind="{...$attrs, onChange: updateModelValue }"
@@ -21,7 +24,8 @@ export default {
   name: 'base-select',
   props: {
     options: { type: Array, required: true },
-    modelValue: { type: String, required: true }
+    modelValue: { type: String, required: true },
+    label: { type: String, default: '' }
   },
   setup(props, context) {
     const { updateModelValue } = useModelValue(props, context);

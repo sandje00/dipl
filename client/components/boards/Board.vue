@@ -1,17 +1,17 @@
 <template>
   <div class="flex-h px-xl py-m">
     <board-column
-      @column-change="handleColumnChange"
+      @column-change="onColumnChange"
       column-title="to do"
       :tasks="tasksToDo"
     ></board-column>
     <board-column
-      @column-change="handleColumnChange"
+      @column-change="onColumnChange"
       column-title="in progress"
       :tasks="tasksInProgress"
     ></board-column>
     <board-column
-      @column-change="handleColumnChange"
+      @column-change="onColumnChange"
       column-title="done"
       :tasks="tasksDone"
     ></board-column>
@@ -53,9 +53,8 @@ export default {
     const tasksInProgress = computed(() => filterTasks(tasks.value, status.IN_PROGRESS, props.currentProject));
     const tasksDone = computed(() => filterTasks(tasks.value, status.DONE, props.currentProject));
 
-    const handleColumnChange = async ({ id, status }) => {
-      return api
-        .update(id, { status })
+    const onColumnChange = async ({ id, status }) => {
+      return api.update(id, { status })
         .then(() => {
           tasks.value = tasks.value.map(it => {
             if (it.id === id) it.status = status;
@@ -69,7 +68,7 @@ export default {
       tasksToDo,
       tasksInProgress,
       tasksDone,
-      handleColumnChange
+      onColumnChange
     };
   },
   components: { BoardColumn }

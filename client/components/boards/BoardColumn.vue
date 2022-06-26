@@ -4,7 +4,7 @@
       <h2 class="board-column-title">
         {{ columnTitle }}
       </h2>
-      <base-button neutral rounded>
+      <base-button @click="toggleOpen" neutral rounded>
         <h2>+</h2>
       </base-button>
     </div>
@@ -23,13 +23,21 @@
         @dragend="onDragEnd($event)"
       ></task-card>
     </div>
+    <new-task-modal
+      :isOpen="isOpen"
+      :status="status"
+      @close-modal="toggleOpen"
+    ></new-task-modal>
   </div>
 </template>
 
 <script>
 import BaseButton from '../common/BaseButton';
+import NewTaskModal from './NewTaskModal';
 import TaskCard from './TaskCard';
+import { ref } from 'vue';
 import useDragAndDrop from '@/composables/useDragAndDrop';
+import useToggle from '@/composables/useToggle';
 
 const toUpperSnakeCase = str => str.toUpperCase().split(' ').join('_');
 
@@ -41,26 +49,38 @@ export default {
   },
   emits: [ 'column-change' ],
   setup(props, { emit }) {
+    const status = ref(toUpperSnakeCase(props.columnTitle));
+
     const {
       toggleDraggable,
       onDragStart,
       onDragEnd,
       onDrop
     } = useDragAndDrop();
-    const columnChange = id => emit('column-change', {
-      id,
-      status: toUpperSnakeCase(props.columnTitle)
-    });
+
+    const columnChange = id => emit('column-change', { id, status: status.value });
+
+    const {
+      isTrue: isOpen,
+      toggle: toggleOpen
+    } = useToggle();
 
     return {
+      status,
       toggleDraggable,
       onDragStart,
       onDragEnd,
       onDrop,
       columnChange,
+      isOpen,
+      toggleOpen
     };
   },
-  components: { BaseButton, TaskCard }
+  components: {
+    BaseButton,
+    NewTaskModal,
+    TaskCard
+  }
 };
 </script>
 
