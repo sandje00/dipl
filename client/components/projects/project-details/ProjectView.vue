@@ -26,7 +26,6 @@
 <script>
 import api from '@/api/projects';
 import BaseButton from '../../common/BaseButton';
-import oauth2 from '@/api/oauth2';
 import { useRouter } from 'vue-router';
 
 export default {
@@ -41,6 +40,7 @@ export default {
     const toggleEditMode = () => emit('toggle-edit-mode');
 
     const router = useRouter();
+
     const deleteProject = () => {
       const result = confirm(`Are you sure you want to delete project ${props.title} and all of its tasks and notes?`);
       return result && api.deleteOne(props.id)
@@ -53,12 +53,9 @@ export default {
       return api.createRepo(props.id, isPrivate)
         .then(({ data }) => console.log(data))
         .catch(({ status, data: { error } }) => {
-          // TDDO Refactor this!
           if (status !== 403) console.log(error);
           const result = confirm(error);
-          return result && oauth2.authorize()
-            .then(({ data: { githubAuthUri } }) => window.open(githubAuthUri))
-            .catch(err => console.error(err));
+          return result && router.push({ name: 'oauth-authorize' });
         });
     };
 
