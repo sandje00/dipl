@@ -8,8 +8,8 @@ const url = {
   deleteOne: id => `/tasks/${id}`
 };
 
-function getAll() {
-  return client.get(url.getAll);
+function getAll(params) {
+  return client.get(url.getAll, { params });
 }
 
 function create(task) {

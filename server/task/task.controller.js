@@ -6,22 +6,29 @@ const {
   NO_CONTENT,
   OK
 } = require('../shared/errors/status');
+const { UniqueConstraintError } = require('sequelize');
 const { Project, sequelize } = require('../shared/database');
 const HttpError = require('../shared/errors/httpError');
 const Task = require('./task.model');
-const { UniqueConstraintError } = require('sequelize');
 
 const msg = {
   SUCCESS_ADD_TASK: 'You have added new task successfully.',
   SUCCESS_UPDATE_TASK: 'You have updated task successfully.'
 };
 
-async function getAll({ user: { id } }, res) {
-  const tasks = await Task.findAll({
-    attributes: {
-      exclude: [ 'userId', 'projectId', 'parentTaskId' ]
-    },
-    where: { userId: id },
+async function getAll({
+  user: { id: userId },
+  query: {
+    attributes,
+    join,
+    projectId
+  }
+}, res) {
+  const defaultAttributes = [ 'id', 'title', 'description', 'type', 'priority', 'status' ]; // Change as new functionalities are added
+  const where = projectId === undefined
+    ? { where: { userId } }
+    : { where: { userId, projectId } };
+  const include = join && {
     include: [{
       model: Project,
       as: 'project',
@@ -31,6 +38,11 @@ async function getAll({ user: { id } }, res) {
       as: 'parentTask',
       attributes: [ 'id', 'title' ]
     }]
+  };
+  const tasks = await Task.findAll({
+    attributes: attributes && JSON.parse(attributes) || defaultAttributes,
+    ...where,
+    ...include
   });
   return res.status(OK).json({ tasks });
 }

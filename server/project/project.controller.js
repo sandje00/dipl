@@ -18,9 +18,12 @@ const msg = {
   SUCCESS_UPDATE_PROJECT: 'You have updated a project successfully.'
 };
 
-async function getAll({ user: { id } }, res) {
-  // TODO Add pagination
-  const projects = await Project.findAll({ where: { userId: id } });
+async function getAll({ user: { id }, query: { attributes } }, res) {
+  const defaultAttributes = [ 'id', 'title', 'description', 'repo' ]; // Change as new functionalities are added
+  const projects = await Project.findAll({
+    attributes: attributes && JSON.parse(attributes) || defaultAttributes,
+    where: { userId: id }
+  });
   return res.status(OK).json({ projects });
 }
 
