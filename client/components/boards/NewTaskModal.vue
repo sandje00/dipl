@@ -22,6 +22,11 @@
         :options="taskPriority"
         label="Priority"
       ></base-select>
+      <base-select
+        v-model="currentProject"
+        :options="projectsList"
+        label="Project"
+      ></base-select>
       <div class="flex-h justify-center mt-xl">
         <base-button
           @click="submit"
@@ -40,7 +45,9 @@
 </template>
 
 <script>
-import api from '@/api/tasks';
+import { onBeforeMount, reactive, ref, watch } from 'vue';
+import apiProjects from '@/api/projects';
+import apiTasks from '@/api/tasks';
 import BaseButton from '../common/BaseButton';
 import BaseInput from '../common/BaseInput';
 import BaseModal from '../common/BaseModal';
@@ -48,8 +55,9 @@ import BaseSelect from '../common/BaseSelect';
 import BaseTextarea from '../common/BaseTextarea';
 import category from '../../../common/type';
 import priority from '../../../common/priority';
-import { reactive } from 'vue';
 import values from 'lodash/values';
+
+const keyValuesToArray = (objArr, key) => objArr.map(it => it[key]);
 
 export default {
   name: 'new-task-modal',
@@ -64,11 +72,32 @@ export default {
       description: '',
       type: category.TASK,
       priority: priority.MEDIUM,
-      status: props.status
+      status: props.status,
+      projectId: null,
+      parentTaskId: null
+    });
+
+    const allProjects = ref([]);
+    const projectsList = ref([]);
+    const currentProject = ref('');
+    const fetchProjects = () => {
+      const attributes = JSON.stringify([ 'id', 'title' ])
+      return apiProjects.getAll({ attributes })
+        .then(({ data: { projects } }) => {
+          allProjects.value = projects;
+          projectsList.value = keyValuesToArray(allProjects.value, 'title');
+          projectsList.value.unshift('');
+        })
+        .catch(err => console.error(err));
+    };
+    onBeforeMount(() => fetchProjects());
+    watch(currentProject, () => {
+      const { id } = allProjects.value.find(it => it.title === currentProject.value);
+      newTask.projectId = id || null;
     });
 
     const submit = async () => {
-      return api.create(newTask)
+      return apiTasks.create(newTask)
         .then(({ data: { message } }) => {
           console.log(message);
           emit('close-modal');
@@ -80,6 +109,8 @@ export default {
       newTask,
       taskType: [ ...values(category) ],
       taskPriority: [ ...values(priority) ],
+      projectsList,
+      currentProject,
       submit
     };
   },
