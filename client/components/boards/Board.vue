@@ -42,8 +42,7 @@ export default {
     const tasks = ref([]);
 
     const fetchTasks = async () => {
-      return api
-        .getAll()
+      return api.getAll({ join: true })
         .then(({ data }) => { tasks.value = data.tasks; })
         .catch(err => console.log(err));
     }
