@@ -27,6 +27,11 @@
         :options="projectsList"
         label="Project"
       ></base-select>
+      <base-select
+        v-model="currentTask"
+        :options="tasksList"
+        label="Parent task"
+      ></base-select>
       <div class="flex-h justify-center mt-xl">
         <base-button
           @click="submit"
@@ -80,8 +85,8 @@ export default {
     const allProjects = ref([]);
     const projectsList = ref([]);
     const currentProject = ref('');
-    const fetchProjects = () => {
-      const attributes = JSON.stringify([ 'id', 'title' ])
+    const fetchAllProjects = async () => {
+      const attributes = JSON.stringify([ 'id', 'title' ]);
       return apiProjects.getAll({ attributes })
         .then(({ data: { projects } }) => {
           allProjects.value = projects;
@@ -90,10 +95,35 @@ export default {
         })
         .catch(err => console.error(err));
     };
-    onBeforeMount(() => fetchProjects());
-    watch(currentProject, () => {
+
+    const allTasks = ref([]);
+    const tasksList = ref([]);
+    const currentTask = ref('');
+    const fetchAllTasks = async (projectId) => {
+      const attributes = JSON.stringify([ 'id', 'title' ]);
+      return apiTasks.getAll({ attributes, projectId })
+        .then(({ data: { tasks } }) => {
+          allTasks.value = tasks;
+          tasksList.value = keyValuesToArray(allTasks.value, 'title');
+          tasksList.value.unshift('');
+        })
+        .catch(err => console.error(err));
+    };
+
+    const fetchAllChoices = async () => {
+      await fetchAllProjects();
+      await fetchAllTasks(newTask.projectId);
+    };
+    onBeforeMount(() => fetchAllChoices());
+
+    watch(currentProject, async () => {
       const { id } = allProjects.value.find(it => it.title === currentProject.value);
       newTask.projectId = id || null;
+      await fetchAllTasks(newTask.projectId);
+    });
+    watch(currentTask, () => {
+      const { id } = allTasks.value.find(it => it.title === currentTask.value);
+      newTask.parentTaskId = id || null;
     });
 
     const submit = async () => {
@@ -111,6 +141,8 @@ export default {
       taskPriority: [ ...values(priority) ],
       projectsList,
       currentProject,
+      tasksList,
+      currentTask,
       submit
     };
   },
