@@ -2,16 +2,19 @@
   <div class="flex-h px-xl py-m">
     <board-column
       @column-change="onColumnChange"
+      @task-created="onTaskCreated"
       column-title="to do"
       :tasks="tasksToDo"
     ></board-column>
     <board-column
       @column-change="onColumnChange"
+      @task-created="onTaskCreated"
       column-title="in progress"
       :tasks="tasksInProgress"
     ></board-column>
     <board-column
       @column-change="onColumnChange"
+      @task-created="onTaskCreated"
       column-title="done"
       :tasks="tasksDone"
     ></board-column>
@@ -63,11 +66,14 @@ export default {
         .catch(err => console.log(err));
     };
 
+    const onTaskCreated = () => fetchTasks();
+
     return {
       tasksToDo,
       tasksInProgress,
       tasksDone,
-      onColumnChange
+      onColumnChange,
+      onTaskCreated
     };
   },
   components: { BoardColumn }

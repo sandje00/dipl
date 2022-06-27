@@ -70,7 +70,7 @@ export default {
     isOpen: { type: Boolean, default: false },
     status: { type: String, required: true }
   },
-  emits: [ 'close-modal' ],
+  emits: [ 'close-modal', 'task-created' ],
   setup(props, { emit }) {
     const newTask = reactive({
       title: '',
@@ -128,8 +128,8 @@ export default {
 
     const submit = async () => {
       return apiTasks.create(newTask)
-        .then(({ data: { message } }) => {
-          console.log(message);
+        .then(() => {
+          emit('task-created');
           emit('close-modal');
         })
         .catch(({ data: { error } }) => console.log(error));

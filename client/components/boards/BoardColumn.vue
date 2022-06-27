@@ -27,6 +27,7 @@
       :isOpen="isOpen"
       :status="status"
       @close-modal="toggleOpen"
+      @task-created="$emit('task-created')"
     ></new-task-modal>
   </div>
 </template>
@@ -47,7 +48,7 @@ export default {
     columnTitle: { type: String, required: true },
     tasks: { type: Array, default: () => ([]) }
   },
-  emits: [ 'column-change' ],
+  emits: [ 'column-change', 'task-created' ],
   setup(props, { emit }) {
     const status = ref(toUpperSnakeCase(props.columnTitle));
 
