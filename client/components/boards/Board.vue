@@ -1,17 +1,20 @@
 <template>
   <div class="flex-h px-xl py-m">
     <board-column
-      @column-change="handleColumnChange"
+      @column-change="onColumnChange"
+      @task-created="onTaskCreated"
       column-title="to do"
       :tasks="tasksToDo"
     ></board-column>
     <board-column
-      @column-change="handleColumnChange"
+      @column-change="onColumnChange"
+      @task-created="onTaskCreated"
       column-title="in progress"
       :tasks="tasksInProgress"
     ></board-column>
     <board-column
-      @column-change="handleColumnChange"
+      @column-change="onColumnChange"
+      @task-created="onTaskCreated"
       column-title="done"
       :tasks="tasksDone"
     ></board-column>
@@ -42,8 +45,7 @@ export default {
     const tasks = ref([]);
 
     const fetchTasks = async () => {
-      return api
-        .getAll()
+      return api.getAll({ join: true })
         .then(({ data }) => { tasks.value = data.tasks; })
         .catch(err => console.log(err));
     }
@@ -53,9 +55,8 @@ export default {
     const tasksInProgress = computed(() => filterTasks(tasks.value, status.IN_PROGRESS, props.currentProject));
     const tasksDone = computed(() => filterTasks(tasks.value, status.DONE, props.currentProject));
 
-    const handleColumnChange = async ({ id, status }) => {
-      return api
-        .update(id, { status })
+    const onColumnChange = async ({ id, status }) => {
+      return api.update(id, { status })
         .then(() => {
           tasks.value = tasks.value.map(it => {
             if (it.id === id) it.status = status;
@@ -65,11 +66,14 @@ export default {
         .catch(err => console.log(err));
     };
 
+    const onTaskCreated = () => fetchTasks();
+
     return {
       tasksToDo,
       tasksInProgress,
       tasksDone,
-      handleColumnChange
+      onColumnChange,
+      onTaskCreated
     };
   },
   components: { BoardColumn }

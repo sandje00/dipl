@@ -10,8 +10,8 @@ const url = {
   createRepo: id => `/projects/${id}/create-repo`,
 };
 
-function getAll() {
-  return client.get(url.getAll);
+function getAll(params) {
+  return client.get(url.getAll, { params });
 }
 
 function getAllTitles() {
