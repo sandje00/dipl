@@ -14,12 +14,14 @@ router
   .use(authenticate)
   .get('/', ctrl.getAll)
   .get('/titles', ctrl.getAllTitles)
+  .get('/repos', authGithub, ctrl.getAllRepos)
   .post('/', ctrl.create)
   .get('/:projectId', ctrl.getOne)
   .patch('/:projectId', ctrl.update)
   .delete('/:projectId', ctrl.deleteOne)
   .use(authGithub)
-  .post('/:projectId/create-repo', ctrl.createRepo);
+  .post('/:projectId/create-repo', ctrl.createRepo)
+  .post('/:projectId/link-to-repo', ctrl.linkToRepo);
 
 module.exports = { path: '/projects', router };
 

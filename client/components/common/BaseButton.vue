@@ -45,12 +45,13 @@ export default {
 
 .secondary {
   background-color: var(--color-background-button-secondary);
-  color: var(--color-text-primary);
-  border: 1px solid var(--color-border);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
 
   &.alert {
     color: var(--color-alert);
     font-weight: $font-weight-bold;
+    border-color: var(--color-alert);
   }
 }
 

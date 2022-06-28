@@ -8,7 +8,7 @@
   <p v-else class="description">
     {{ description }}
   </p>
-  <div v-if="repo?.full_name" class="flex-v">
+  <div v-if="repo?.name" class="flex-v">
     <span class="mt-l">Repo:</span>
     <a
       :href="repo?.html_url"
@@ -22,7 +22,7 @@
     <base-button @click="toggleEditMode" class="ml-m" secondary>
       Edit
     </base-button>
-    <base-button v-if="!repo?.full_name" @click="createRepo" class="ml-m" secondary>
+    <base-button v-if="!repo?.name" @click="createRepo" class="ml-m" secondary>
       Create GitHub repo
     </base-button>
     <base-button @click="deleteProject" class="ml-m" secondary alert>

@@ -18,6 +18,8 @@ const msg = {
   SUCCESS_UPDATE_PROJECT: 'You have updated a project successfully.'
 };
 
+const REPO_INFO = [ 'id', 'name', 'full_name', 'private', 'html_url' ];
+
 async function getAll({ user: { id }, query: { attributes } }, res) {
   const defaultAttributes = [ 'id', 'title', 'description', 'repo' ]; // Change as new functionalities are added
   const projects = await Project.findAll({
@@ -88,11 +90,23 @@ async function createRepo({ project, githubAccessToken, query: { isPrivate } }, 
     description: project.description,
     private: isPrivate
   };
-  const repoInfo = await githubClient.createRepo(githubAccessToken, data);
-  const repo = pick(repoInfo.data, [ 'id', 'full_name', 'private', 'html_url' ]);
+  const repoData = await githubClient.createRepo(githubAccessToken, data);
+  const repo = pick(repoData.data, REPO_INFO);
   project.set({ repo });
   await project.save();
   return res.status(CREATED).json({ repo });
+}
+
+async function getAllRepos({ githubAccessToken }, res) {
+  const reposData = await githubClient.getAllRepos(githubAccessToken);
+  const repos = extractReposInfo(reposData.data, REPO_INFO);
+  return res.status(OK).json({ repos });
+}
+
+async function linkToRepo({ project, body: repo }, res) {
+  project.set({ repo });
+  await project.save();
+  return res.send(OK).json({ repo });
 }
 
 module.exports = {
@@ -102,9 +116,15 @@ module.exports = {
   update,
   getAllTitles,
   deleteOne,
-  createRepo
+  createRepo,
+  getAllRepos,
+  linkToRepo
 };
 
 function keyValuesToArray(objArr, key) {
   return objArr.map(it => it[key]);
+}
+
+function extractReposInfo(data, info) {
+  return data.map(it => pick(it, info));
 }

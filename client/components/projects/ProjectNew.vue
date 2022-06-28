@@ -29,10 +29,13 @@ import api from '@/api/projects';
 import BaseButton from '../common/BaseButton';
 import BaseInput from '../common/BaseInput';
 import BaseTextarea from '../common/BaseTextarea';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'project-new',
   setup() {
+    const router = useRouter();
+
     const validationSchema = {
       title: { required: true }
     };
@@ -47,9 +50,10 @@ export default {
         .create(values)
         .then(({ data: { message } }) => {
           console.log(message);
-          resetForm(({ data: { error } }) => console.log(error));
+          resetForm();
+          router.push({ name: 'projects-all' });
         })
-        .catch();
+        .catch(({ data: { error } }) => console.error(error));
     });
 
     return { errors, title, description, submit };
@@ -61,7 +65,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-
-</style>
