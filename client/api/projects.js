@@ -3,11 +3,13 @@ import client from './client';
 const url = {
   getAll: '/projects',
   getAllTitles: '/projects/titles',
+  getAllRepos: '/projects/repos',
   create: '/projects',
   getOne: id => `/projects/${id}`,
   update: id => `/projects/${id}`,
   deleteOne: id => `/projects/${id}`,
   createRepo: id => `/projects/${id}/create-repo`,
+  linkToRepo: id => `/projects/${id}/link-to-repo`
 };
 
 function getAll(params) {
@@ -16,6 +18,10 @@ function getAll(params) {
 
 function getAllTitles() {
   return client.get(url.getAllTitles);
+}
+
+function getAllRepos() {
+  return client.get(url.getAllRepos);
 }
 
 function create(project) {
@@ -40,12 +46,18 @@ function createRepo(projectId, isPrivate) {
   });
 }
 
+function linkToRepo(projectId, repo) {
+  return client.post(url.linkToRepo(projectId), repo);
+}
+
 export default {
   getAll,
   getAllTitles,
+  getAllRepos,
   create,
   getOne,
   update,
   deleteOne,
-  createRepo
+  createRepo,
+  linkToRepo
 };

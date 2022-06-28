@@ -8,7 +8,8 @@ const crypto = require('crypto');
 const ENDPOINTS = {
   authorize: 'https://github.com/login/oauth/authorize',
   accessToken: 'https://github.com/login/oauth/access_token',
-  createRepo: 'https://api.github.com/user/repos'
+  createRepo: 'https://api.github.com/user/repos',
+  getAllRepos: 'https://api.github.com/user/repos'
 };
 
 class GitHubClient {
@@ -45,6 +46,12 @@ class GitHubClient {
 
   async createRepo(accessToken, data) {
     return this._rest.post(this._endpoints.createRepo, data, {
+      headers: this._getAuthHeaders(accessToken)
+    });
+  }
+
+  async getAllRepos(accessToken) {
+    return this._rest.get(this._endpoints.getAllRepos, {
       headers: this._getAuthHeaders(accessToken)
     });
   }
