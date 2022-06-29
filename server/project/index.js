@@ -13,7 +13,6 @@ router.param('projectId', getProject);
 router
   .use(authenticate)
   .get('/', ctrl.getAll)
-  .get('/titles', ctrl.getAllTitles)
   .get('/repos', authGithub, ctrl.getAllRepos)
   .post('/', ctrl.create)
   .get('/:projectId', ctrl.getOne)
