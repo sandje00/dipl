@@ -59,16 +59,6 @@ async function update({ body, project }, res) {
   return res.status(OK).json({ message: msg.SUCCESS_UPDATE_PROJECT });
 }
 
-async function getAllTitles({ user: { id } }, res) {
-  const projects = await Project.findAll({
-    attributes: [ 'title' ],
-    where: { userId: id }
-  });
-  return res.status(OK).json({
-    projects: keyValuesToArray(projects, 'title')
-  });
-}
-
 async function deleteOne({ project }, res) {
   await sequelize.transaction(async (t) => {
     await Note.destroy(
@@ -114,16 +104,11 @@ module.exports = {
   create,
   getOne,
   update,
-  getAllTitles,
   deleteOne,
   createRepo,
   getAllRepos,
   linkToRepo
 };
-
-function keyValuesToArray(objArr, key) {
-  return objArr.map(it => it[key]);
-}
 
 function extractReposInfo(data, info) {
   return data.map(it => pick(it, info));

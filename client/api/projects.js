@@ -2,7 +2,6 @@ import client from './client';
 
 const url = {
   getAll: '/projects',
-  getAllTitles: '/projects/titles',
   getAllRepos: '/projects/repos',
   create: '/projects',
   getOne: id => `/projects/${id}`,
@@ -14,10 +13,6 @@ const url = {
 
 function getAll(params) {
   return client.get(url.getAll, { params });
-}
-
-function getAllTitles() {
-  return client.get(url.getAllTitles);
 }
 
 function getAllRepos() {
@@ -52,7 +47,6 @@ function linkToRepo(projectId, repo) {
 
 export default {
   getAll,
-  getAllTitles,
   getAllRepos,
   create,
   getOne,

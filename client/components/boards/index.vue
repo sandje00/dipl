@@ -2,11 +2,11 @@
   <app-layout>
     <template v-slot:page-header>
       <boards-header
-        @project-change="handleProjectChange"
+        @project-change="onProjectChange"
       ></boards-header>
     </template>
     <task-board
-      :current-project="currentProject"
+      :currentProjectId="currentProjectId"
     ></task-board>
   </app-layout>
 </template>
@@ -20,14 +20,14 @@ import TaskBoard from './Board';
 export default {
   name: 'boards-view',
   setup() {
-    const currentProject = ref('All Projects');
-    const handleProjectChange = project => {
-      currentProject.value = project;
+    const currentProjectId = ref(0);
+    const onProjectChange = projectId => {
+      currentProjectId.value = projectId;
     };
 
     return {
-      currentProject,
-      handleProjectChange
+      currentProjectId,
+      onProjectChange
     }
   },
   components: {

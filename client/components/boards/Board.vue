@@ -22,38 +22,34 @@
 </template>
 
 <script>
-import { computed, ref, onBeforeMount } from 'vue';
+import { computed, onBeforeMount, ref, watch } from 'vue';
 import api from '@/api/tasks';
 import BoardColumn from './BoardColumn';
 import status from '../../../common/status';
 
-const filterTasks = (tasks, status, projectTitle) => {
-  return tasks
-    .filter(
-      projectTitle === 'All Projects'
-      ? it => it.status === status
-      : it => it.project?.title === projectTitle && it.status === status
-    );
-};
+const filterTasks = (tasks, status) => tasks.filter(it => it.status === status);
 
 export default {
   name: 'task-board',
   props: {
-    currentProject: { type: String, default: 'All Projects' }
+    currentProjectId: { type: Number, default: 0 }
   },
   setup(props) {
+    const projectId = computed(() => props.currentProjectId || null);
+
     const tasks = ref([]);
 
-    const fetchTasks = async () => {
-      return api.getAll({ join: true })
+    const fetchTasks = async (projectId) => {
+      return api.getAll({ join: true, projectId })
         .then(({ data }) => { tasks.value = data.tasks; })
         .catch(err => console.log(err));
     }
-    onBeforeMount(() => fetchTasks());
+    onBeforeMount(() => fetchTasks(projectId.value));
+    watch(projectId, () => fetchTasks(projectId.value));
 
-    const tasksToDo = computed(() => filterTasks(tasks.value, status.TO_DO, props.currentProject));
-    const tasksInProgress = computed(() => filterTasks(tasks.value, status.IN_PROGRESS, props.currentProject));
-    const tasksDone = computed(() => filterTasks(tasks.value, status.DONE, props.currentProject));
+    const tasksToDo = computed(() => filterTasks(tasks.value, status.TO_DO));
+    const tasksInProgress = computed(() => filterTasks(tasks.value, status.IN_PROGRESS));
+    const tasksDone = computed(() => filterTasks(tasks.value, status.DONE));
 
     const onColumnChange = async ({ id, status }) => {
       return api.update(id, { status })
@@ -66,7 +62,7 @@ export default {
         .catch(err => console.log(err));
     };
 
-    const onTaskCreated = () => fetchTasks();
+    const onTaskCreated = () => fetchTasks(projectId.value);
 
     return {
       tasksToDo,
