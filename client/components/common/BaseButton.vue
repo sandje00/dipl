@@ -1,8 +1,8 @@
 <template>
   <button
     :class="[
-      { neutral, secondary, alert },
-      !neutral && !secondary && 'primary',
+      { neutral, secondary, alert, icon },
+      !neutral && !secondary && !icon && 'primary',
       rounded ? 'px-m rounded' : 'px-xl'
     ]"
     class="py-s button"
@@ -18,7 +18,8 @@ export default {
     neutral: { type: Boolean, default: false },
     secondary: { type: Boolean, default: false },
     alert: { type: Boolean, default: false },
-    rounded: { type: Boolean, default: false }
+    rounded: { type: Boolean, default: false },
+    icon: { type: Boolean, default: false }
   }
 }
 </script>
@@ -63,5 +64,11 @@ export default {
 
 .rounded {
   border-radius: 50%;
+}
+
+.icon {
+  background: none;
+  border: none;
+  padding: 0;
 }
 </style>
